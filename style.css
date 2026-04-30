@@ -1,0 +1,145 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0b0b;
+  color: white;
+}
+
+/* APP CONTAINER */
+.app {
+  max-width: 520px;
+  margin: auto;
+  padding: 16px;
+}
+
+/* TITLE */
+h1 {
+  text-align: center;
+  color: #00ffcc;
+  margin-bottom: 20px;
+}
+
+/* CARD */
+.card {
+  background: #161616;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  border: 1px solid #222;
+}
+
+/* SECTION TITLE */
+h2 {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #00ffcc;
+}
+
+/* INPUT */
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #222;
+  color: white;
+  outline: none;
+}
+
+/* DEVICE MODEL SELECT (NEW PREMIUM STYLE) */
+#deviceModel {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+
+  border-radius: 10px;
+  border: 1px solid #333;
+
+  background: #1a1a1a;
+  color: white;
+
+  outline: none;
+  font-size: 14px;
+}
+
+/* DEVICE SELECT HOVER */
+#deviceModel:hover {
+  background: #222;
+}
+
+/* FPS SELECT DIFFERENT STYLE (keep simple but consistent) */
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #222;
+  color: white;
+  outline: none;
+}
+
+/* TOGGLE BUTTON GROUP (NEW SYSTEM) */
+.toggle-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* TOGGLE BUTTONS */
+.toggle-group button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background: #222;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* HOVER */
+.toggle-group button:hover {
+  background: #2a2a2a;
+}
+
+/* ACTIVE STATE (IMPORTANT) */
+.toggle-group button.active {
+  background: #00ffcc;
+  color: black;
+  font-weight: bold;
+  border: none;
+}
+
+/* MAIN GENERATE BUTTON */
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #00ffcc;
+  font-weight: bold;
+  font-size: 16px;
+  color: black;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* RESULT TEXT */
+.result p {
+  white-space: pre-line;
+  font-size: 14px;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 480px) {
+  .toggle-group {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Sensitivity Pro</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <meta name="theme-color" content="#111111" />
+  </head>
+
+  <body>
+    <div class="app">
+      <h1>🎮 Sensitivity Pro</h1>
+
+      <!-- PLATFORM -->
+      <div class="card">
+        <h2>Platform</h2>
+
+        <div class="toggle-group">
+          <button
+            id="platform-android"
+            onclick="setPlatform('android')"
+            class="active"
+          >
+            Android
+          </button>
+
+          <button id="platform-ios" onclick="setPlatform('ios')">
+            iPhone / iOS
+          </button>
+        </div>
+      </div>
+
+      <!-- DEVICE -->
+      <div class="card">
+        <h2>Device</h2>
+
+        <input
+          id="phone"
+          type="text"
+          placeholder="Search or type device (optional)"
+        />
+
+        <select id="deviceModel"></select>
+      </div>
+
+      <!-- FPS -->
+      <div class="card">
+        <h2>FPS</h2>
+
+        <select id="fps">
+          <option value="60">60 FPS</option>
+          <option value="90">90 FPS</option>
+          <option value="120">120 FPS</option>
+        </select>
+      </div>
+
+      <!-- GYRO -->
+      <div class="card">
+        <h2>Gyroscope</h2>
+
+        <div class="toggle-group">
+          <button id="gyro-on" onclick="setGyro('on')" class="active">
+            ON
+          </button>
+
+          <button id="gyro-off" onclick="setGyro('off')">OFF</button>
+        </div>
+      </div>
+
+      <!-- MODE -->
+      <div class="card">
+        <h2>Mode</h2>
+
+        <div class="toggle-group">
+          <button
+            id="mode-standard"
+            onclick="setMode('standard')"
+            class="active"
+          >
+            Standard
+          </button>
+
+          <button id="mode-pro" onclick="setMode('pro')">Pro</button>
+        </div>
+      </div>
+
+      <!-- GENERATE -->
+      <button onclick="generate()">Generate Sensitivity</button>
+
+      <!-- RESULTS -->
+      <div class="card result" id="results" style="display: none">
+        <h2>📷 Camera</h2>
+        <p id="camera"></p>
+
+        <h2>🔫 ADS</h2>
+        <p id="ads"></p>
+
+        <h2>📱 Gyro</h2>
+        <p id="gyroResult"></p>
+
+        <h2>🔥 ADS Gyro</h2>
+        <p id="adsGyro"></p>
+
+        <!-- Cloud code will be injected here -->
+      </div>
+    </div>
+
+    <!-- IMPORTANT: MUST BE MODULE -->
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
