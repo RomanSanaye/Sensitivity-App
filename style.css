@@ -1,3 +1,4 @@
+/* ================= GLOBAL RESET ================= */
 * {
   box-sizing: border-box;
 }
@@ -9,38 +10,36 @@ body {
   color: white;
 }
 
-/* APP CONTAINER */
+/* ================= APP CONTAINER ================= */
 .app {
   max-width: 520px;
   margin: auto;
   padding: 16px;
 }
 
-/* TITLE */
+/* ================= TITLES ================= */
 h1 {
   text-align: center;
   color: #00ffcc;
   margin-bottom: 20px;
 }
 
-/* CARD */
-.card {
-  background: #161616;
-  padding: 20px 14px;
-  margin-bottom: 12px;
-  margin-top: 12px;
-  border-radius: 14px;
-  border: 1px solid #222;
-}
-
-/* SECTION TITLE */
 h2 {
   font-size: 15px;
   margin-bottom: 10px;
   color: #00ffcc;
 }
 
-/* INPUT */
+/* ================= CARD ================= */
+.card {
+  background: #161616;
+  padding: 20px 14px;
+  margin: 12px 0;
+  border-radius: 14px;
+  border: 1px solid #222;
+}
+
+/* ================= INPUT ================= */
 input {
   width: 100%;
   padding: 12px;
@@ -51,49 +50,98 @@ input {
   outline: none;
 }
 
-/* DEVICE MODEL SELECT (NEW PREMIUM STYLE) */
-#deviceModel {
+/* ================= GLOBAL SELECT STYLE ================= */
+select {
   width: 100%;
-  padding: 12px;
-  margin-top: 10px;
+  padding: 12px 14px;
+  background: #1a1a1a;
+  color: #ffffff;
 
   border-radius: 10px;
   border: 1px solid #333;
 
-  background: #1a1a1a;
-  color: white;
-
+  font-size: 16px;
   outline: none;
-  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Focus effect */
+select:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 0 1px rgba(43, 124, 255, 0.3);
+}
+
+/* Extra spacing inside cards */
+.card select {
+  margin-top: 10px;
+}
+
+/* Dropdown options */
+/* ================= GLOBAL OPTION STYLE ================= */
+select option {
+  background: #1a1a1a;
+  color: #ffffff;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+}
+
+/* Hover effect inside dropdown */
+select option:hover {
+  background: #00ffcc !important;
+  color: #000 !important;
+}
+
+/* Disabled option */
+select option:disabled {
+  color: #777;
+  background: #1a1a1a;
+}
+
+/* ================= GLOBAL SCROLLBAR STYLE ================= */
+select::-webkit-scrollbar {
+  width: 10px;
+}
+
+select::-webkit-scrollbar-track {
+  background: #111;
+  border-radius: 10px;
+}
+
+select::-webkit-scrollbar-thumb {
+  background: #00ffcc;
+  border-radius: 10px;
+}
+
+select::-webkit-scrollbar-thumb:hover {
+  background: #00d4aa;
+}
+
+/* Remove default arrow on some browsers */
+select::-ms-expand {
+  display: none;
 }
 
 
+/* ================= PREMIUM DEVICE MODEL SELECT ================= */
+#deviceModel {
+  font-size: 14px; /* override global */
+  padding: 12px;   /* override global */
+}
 
-
-/* DEVICE SELECT HOVER */
 #deviceModel:hover {
   background: #222;
 }
 
-/* FPS SELECT DIFFERENT STYLE (keep simple but consistent) */
-select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  background: #222;
-  color: white;
-  outline: none;
-}
-
-/* TOGGLE BUTTON GROUP (NEW SYSTEM) */
+/* ================= TOGGLE GROUP ================= */
 .toggle-group {
   display: flex;
   gap: 10px;
   transition: 0.2s ease;
 }
 
-/* TOGGLE BUTTONS */
 .toggle-group button {
   flex: 1;
   padding: 12px;
@@ -106,12 +154,10 @@ select {
   transition: 0.2s;
 }
 
-/* HOVER */
 .toggle-group button:hover {
   background: #2a2a2a;
 }
 
-/* ACTIVE STATE (IMPORTANT) */
 .toggle-group button.active {
   background: #00ffcc;
   color: black;
@@ -119,7 +165,7 @@ select {
   border: none;
 }
 
-/* MAIN GENERATE BUTTON */
+/* ================= MAIN BUTTON ================= */
 button {
   width: 100%;
   padding: 14px;
@@ -136,28 +182,58 @@ button:active {
   transform: scale(0.98);
 }
 
-/* RESULT TEXT */
+/* ================= RESULT TEXT ================= */
 .result p {
   white-space: pre-line;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 500;
 }
 
-/* MOBILE RESPONSIVE */
-@media (max-width: 480px) {
-  .toggle-group {
-    flex-direction: column;
-  }
+.result p br {
+  margin-bottom: 6px;
 }
 
+/* ================= SCREEN TRANSITION ================= */
+#inputScreen,
+#resultScreen {
+  transition: opacity 0.25s ease;
+}
+
+.hidden-screen {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.active-screen {
+  opacity: 1;
+}
+
+/* ================= RESULT SCREEN IMPROVEMENTS ================= */
+#resultScreen .card {
+  border: 1px solid #00ffcc33;
+  background: #141414;
+}
+
+#resultScreen h2 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+#resultScreen {
+  padding-bottom: 40px;
+}
+
+/* ================= RESET BUTTON ================= */
 .reset-btn {
   width: 100%;
   padding: 12px;
-  margin-top: 20px;
+  margin-top: 30px;
   background: #ff4d4d;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s ease;
@@ -173,78 +249,18 @@ button:active {
   transform: translateY(0);
 }
 
-/* ================= SCREEN TRANSITION ================= */
-
-#inputScreen,
-#resultScreen {
-transition: opacity 0.25s ease;
-}
-
-/* Optional fade effect (future ready) */
-.hidden-screen {
-opacity: 0;
-pointer-events: none;
-}
-
-.active-screen {
-opacity: 1;
-}
-
-/* ================= RESULT SCREEN IMPROVEMENTS ================= */
-
-/* Make result cards slightly more prominent */
-#resultScreen .card {
-border: 1px solid #00ffcc33;
-background: #141414;
-}
-
-/* Bigger titles in result mode */
-#resultScreen h2 {
-font-size: 16px;
-margin-bottom: 12px;
-}
-
-/* 🔥 IMPORTANT: improve readability of numbers */
-.result p {
-white-space: pre-line;
-font-size: 16px;
-line-height: 1.6;
-font-weight: 500;
-}
-
-/* Add spacing between value blocks */
-.result p br {
-margin-bottom: 6px;
-}
-
-/* ================= RESULT SCREEN LAYOUT ================= */
-
-/* Give result screen a bit more breathing room */
-#resultScreen {
-padding-bottom: 40px;
-}
-
-/* ================= RESET BUTTON UPGRADE ================= */
-
-.reset-btn {
-margin-top: 30px;
-font-size: 17px;
-border-radius: 10px;
-}
-
-/* ================= SMALL MOBILE POLISH ================= */
-
+/* ================= MOBILE POLISH ================= */
 @media (max-width: 480px) {
+  .toggle-group {
+    flex-direction: column;
+  }
 
-/* Slightly larger tap targets */
-button {
-font-size: 17px;
-padding: 16px;
-}
+  button {
+    font-size: 17px;
+    padding: 16px;
+  }
 
-/* Better spacing in cards */
-.card {
-padding: 18px 14px;
+  .card {
+    padding: 18px 14px;
+  }
 }
-}
-
