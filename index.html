@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Sensitivity Pro</title>
+    <title>PUBG Sensitivity</title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="stylesheet" href="style.css" />
     <meta name="theme-color" content="#111111" />
@@ -13,7 +13,7 @@
   <body>
     <!-- ================= INPUT SCREEN ================= -->
     <div id="inputScreen" class="app">
-      <h1>🎮 Sensitivity Pro</h1>
+      <h1>🎮 PUBG Sensitivity</h1>
 
       <!-- DEVICE -->
       <div class="card">
@@ -32,45 +32,44 @@
         <br /><br />
 
         <div class="toggle-group" id="platform-group">
-          <button
-            id="platform-android"
-            onclick="setPlatform('android')"
-            class="active"
-          >
-            Android
-          </button>
+          <button id="platform-android" class="active">Android</button>
 
-          <button id="platform-ios" onclick="setPlatform('ios')">
-            iPhone / iOS
-          </button>
+          <button id="platform-ios">iPhone / iOS</button>
         </div>
 
-        <select id="deviceModel">
-          <option value="" disabled selected hidden>
+        <!-- DEVICE CUSTOM DROPDOWN -->
+        <div class="custom-dropdown" id="deviceDropdown">
+          <div class="dropdown-selected" id="deviceSelected">
             Select your device model
-          </option>
-          <option value="auto">🤖 Auto-detect device (recommended)</option>
-        </select>
+          </div>
+
+          <div class="dropdown-list" id="deviceList"></div>
+        </div>
       </div>
 
       <!-- FPS -->
       <div class="card">
         <h2>FPS</h2>
-        <select id="fps">
-          <option value="60">60 FPS</option>
-          <option value="90">90 FPS</option>
-          <option value="120">120 FPS</option>
-        </select>
+
+        <div class="custom-dropdown" id="fpsDropdown">
+          <div class="dropdown-selected" id="fpsSelected">60 FPS</div>
+
+          <div class="dropdown-list" id="fpsList">
+            <div class="dropdown-item" data-value="60">60 FPS</div>
+            <div class="dropdown-item" data-value="90">90 FPS</div>
+            <div class="dropdown-item" data-value="120">120 FPS</div>
+          </div>
+        </div>
+
+        <input type="hidden" id="fps" value="60" />
       </div>
 
       <!-- GYRO -->
       <div class="card">
         <h2>Gyroscope</h2>
         <div class="toggle-group">
-          <button id="gyro-on" onclick="setGyro('on')" class="active">
-            ON
-          </button>
-          <button id="gyro-off" onclick="setGyro('off')">OFF</button>
+          <button id="gyro-on" class="active">ON</button>
+          <button id="gyro-off">OFF</button>
         </div>
       </div>
 
@@ -78,23 +77,15 @@
       <div class="card">
         <h2>Playstyle</h2>
         <div class="toggle-group">
-          <button
-            id="style-balanced"
-            onclick="setStyle('balanced')"
-            class="active"
-          >
-            Balanced
-          </button>
-          <button id="style-aggressive" onclick="setStyle('aggressive')">
-            Aggressive
-          </button>
-          <button id="style-sniper" onclick="setStyle('sniper')">Sniper</button>
+          <button id="style-balanced" class="active">Balanced</button>
+          <button id="style-aggressive">Aggressive</button>
+          <button id="style-sniper">Sniper</button>
         </div>
       </div>
 
       <!-- GENERATE -->
       <div class="card">
-        <button onclick="generate()">🎯 Generate Sensitivity</button>
+        <button id="generateBtn">🎯 Generate Sensitivity</button>
       </div>
     </div>
 
@@ -122,7 +113,7 @@
         <p id="adsGyro"></p>
       </div>
 
-      <button class="reset-btn" onclick="resetApp()">🔄 Reset</button>
+      <button class="reset-btn" id="resetBtn">🔄 Reset</button>
     </div>
 
     <script type="module" src="app.js"></script>

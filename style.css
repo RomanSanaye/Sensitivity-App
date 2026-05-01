@@ -37,6 +37,9 @@ h2 {
   margin: 12px 0;
   border-radius: 14px;
   border: 1px solid #222;
+
+  position: relative;
+  overflow: visible;
 }
 
 /* ================= INPUT ================= */
@@ -48,91 +51,6 @@ input {
   background: #222;
   color: white;
   outline: none;
-}
-
-/* ================= GLOBAL SELECT STYLE ================= */
-select {
-  width: 100%;
-  padding: 12px 14px;
-  background: #1a1a1a;
-  color: #ffffff;
-
-  border-radius: 10px;
-  border: 1px solid #333;
-
-  font-size: 16px;
-  outline: none;
-  appearance: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-/* Focus effect */
-select:focus {
-  border-color: #00ffcc;
-  box-shadow: 0 0 0 1px rgba(43, 124, 255, 0.3);
-}
-
-/* Extra spacing inside cards */
-.card select {
-  margin-top: 10px;
-}
-
-/* Dropdown options */
-/* ================= GLOBAL OPTION STYLE ================= */
-select option {
-  background: #1a1a1a;
-  color: #ffffff;
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-}
-
-/* Hover effect inside dropdown */
-select option:hover {
-  background: #00ffcc !important;
-  color: #000 !important;
-}
-
-/* Disabled option */
-select option:disabled {
-  color: #777;
-  background: #1a1a1a;
-}
-
-/* ================= GLOBAL SCROLLBAR STYLE ================= */
-select::-webkit-scrollbar {
-  width: 10px;
-}
-
-select::-webkit-scrollbar-track {
-  background: #111;
-  border-radius: 10px;
-}
-
-select::-webkit-scrollbar-thumb {
-  background: #00ffcc;
-  border-radius: 10px;
-}
-
-select::-webkit-scrollbar-thumb:hover {
-  background: #00d4aa;
-}
-
-/* Remove default arrow on some browsers */
-select::-ms-expand {
-  display: none;
-}
-
-
-/* ================= PREMIUM DEVICE MODEL SELECT ================= */
-#deviceModel {
-  font-size: 14px; /* override global */
-  padding: 12px;   /* override global */
-}
-
-#deviceModel:hover {
-  background: #222;
 }
 
 /* ================= TOGGLE GROUP ================= */
@@ -151,7 +69,7 @@ select::-ms-expand {
   color: white;
   font-size: 14px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
 .toggle-group button:hover {
@@ -179,7 +97,8 @@ button {
 }
 
 button:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
+  transition: transform 0.1s ease;
 }
 
 /* ================= RESULT TEXT ================= */
@@ -194,22 +113,7 @@ button:active {
   margin-bottom: 6px;
 }
 
-/* ================= SCREEN TRANSITION ================= */
-#inputScreen,
-#resultScreen {
-  transition: opacity 0.25s ease;
-}
-
-.hidden-screen {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.active-screen {
-  opacity: 1;
-}
-
-/* ================= RESULT SCREEN IMPROVEMENTS ================= */
+/* ================= RESULT SCREEN ================= */
 #resultScreen .card {
   border: 1px solid #00ffcc33;
   background: #141414;
@@ -263,4 +167,104 @@ button:active {
   .card {
     padding: 18px 14px;
   }
+}
+
+/* =========================================================
+   🎮 CUSTOM DROPDOWN (FPS + DEVICE)
+   ========================================================= */
+
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+  user-select: none;
+}
+
+/* Selected box */
+.dropdown-selected {
+  background: #222;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  position: relative;
+  transition: 0.2s ease;
+}
+
+.dropdown-selected:hover {
+  border-color: #00ffcc55;
+}
+
+/* Arrow */
+.dropdown-selected::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #00ffcc;
+  border-bottom: 2px solid #00ffcc;
+  transform: translateY(-50%) rotate(45deg);
+  transition: 0.3s ease;
+}
+
+/* Rotate arrow when open */
+.custom-dropdown.open .dropdown-selected::after {
+  transform: translateY(-50%) rotate(-135deg);
+}
+
+/* Dropdown list */
+.dropdown-list {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #141414;
+  border: 1px solid #333;
+  border-radius: 10px;
+
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.25s ease;
+
+  z-index: 999;
+  overflow-y: auto;
+}
+
+/* Open animation */
+.custom-dropdown.open .dropdown-list {
+  max-height: 240px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Items */
+.dropdown-item {
+  padding: 12px 14px;
+  cursor: pointer;
+  color: white;
+  transition: 0.2s ease;
+}
+
+/* Hover */
+.dropdown-item:hover {
+  background: #222;
+  color: #00ffcc;
+}
+
+/* Active item */
+.dropdown-item.active {
+  background: #00ffcc;
+  color: black;
+  font-weight: bold;
+}
+
+/* Disabled item */
+.dropdown-item.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  font-style: italic;
 }
