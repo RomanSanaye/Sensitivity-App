@@ -101,6 +101,36 @@ button:active {
   transition: transform 0.1s ease;
 }
 
+/* ============================================
+   CUSTOM SCROLLBAR (Device + FPS dropdowns)
+   ============================================ */
+
+.custom-dropdown .dropdown-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-dropdown .dropdown-list::-webkit-scrollbar-track {
+  background: #111;
+  border-radius: 10px;
+}
+
+.custom-dropdown .dropdown-list::-webkit-scrollbar-thumb {
+  background: #00ffcc;
+  border-radius: 10px;
+  border: 2px solid #111;
+}
+
+.custom-dropdown .dropdown-list::-webkit-scrollbar-thumb:hover {
+  background: #00e6b8;
+}
+
+/* Firefox */
+.custom-dropdown .dropdown-list {
+  scrollbar-width: thin;
+  scrollbar-color: #00ffcc #111;
+}
+
+
 /* ================= RESULT TEXT ================= */
 .result p {
   white-space: pre-line;

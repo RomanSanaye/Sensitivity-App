@@ -368,7 +368,8 @@ function generate() {
     device = getDevice(selectedDevice);
   }
 
-  const type = selectedPlatform;
+  const type = selectedPlatform === "ios" ? "iphone" : "android";
+
   const base = JSON.parse(JSON.stringify(baseProfile[type]));
 
   const deviceBoost = device ? (device.touchResponse / 100) : 1;
