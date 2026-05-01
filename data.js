@@ -260,6 +260,57 @@ export const androidDevices = [
     screenSize: 6.8
   },
 
+  // ===== SAMSUNG A / M SERIES (POPULAR MIDRANGE) =====
+  {
+    name: "Samsung A52",
+    brand: "Samsung",
+    type: "android",
+    fpsCap: 90,
+    refreshRate: 90,
+    touchResponse: 82,
+    gyroStability: 84,
+    screenSize: 6.5
+  },
+  {
+    name: "Samsung A54",
+    brand: "Samsung",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 84,
+    gyroStability: 86,
+    screenSize: 6.4
+  },
+  {
+    name: "Samsung A73",
+    brand: "Samsung",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 85,
+    gyroStability: 87,
+    screenSize: 6.7
+  },
+  {
+    name: "Samsung M52",
+    brand: "Samsung",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 80,
+    gyroStability: 82,
+    screenSize: 6.7
+  },
+  {
+    name: "Samsung M54",
+    brand: "Samsung",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 82,
+    gyroStability: 84,
+    screenSize: 6.7
+  },
 
   // ===== iQOO =====
   {
@@ -293,8 +344,7 @@ export const androidDevices = [
     screenSize: 6.78
   },
 
-
-  // ===== XIAOMI =====
+  // ===== XIAOMI FLAGSHIP =====
   {
     name: "Xiaomi 13",
     brand: "Xiaomi",
@@ -326,7 +376,6 @@ export const androidDevices = [
     screenSize: 6.36
   },
 
-
   // ===== REDMI =====
   {
     name: "Redmi Note 13",
@@ -348,7 +397,16 @@ export const androidDevices = [
     gyroStability: 86,
     screenSize: 6.67
   },
-
+  {
+    name: "Redmi Note 12 Pro",
+    brand: "Redmi",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 83,
+    gyroStability: 85,
+    screenSize: 6.67
+  },
 
   // ===== POCO =====
   {
@@ -371,9 +429,28 @@ export const androidDevices = [
     gyroStability: 90,
     screenSize: 6.67
   },
-
+  {
+    name: "Poco F5",
+    brand: "Poco",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 88,
+    gyroStability: 90,
+    screenSize: 6.67
+  },
 
   // ===== ONEPLUS =====
+  {
+    name: "OnePlus 11",
+    brand: "OnePlus",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 92,
+    gyroStability: 93,
+    screenSize: 6.7
+  },
   {
     name: "OnePlus 12",
     brand: "OnePlus",
@@ -385,8 +462,7 @@ export const androidDevices = [
     screenSize: 6.82
   },
 
-
-  // ===== VIVO =====
+  // ===== VIVO / REALME / OPPO =====
   {
     name: "Vivo X100 Pro",
     brand: "Vivo",
@@ -397,7 +473,68 @@ export const androidDevices = [
     gyroStability: 94,
     screenSize: 6.78
   },
+  {
+    name: "Realme GT Neo 3",
+    brand: "Realme",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 88,
+    gyroStability: 89,
+    screenSize: 6.7
+  },
+  {
+    name: "Oppo Reno 10 Pro",
+    brand: "Oppo",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 87,
+    gyroStability: 88,
+    screenSize: 6.7
+  },
 
+  // ===== GAMING PHONES =====
+  {
+    name: "ROG Phone 6",
+    brand: "ASUS",
+    type: "android",
+    fpsCap: 165,
+    refreshRate: 165,
+    touchResponse: 98,
+    gyroStability: 97,
+    screenSize: 6.78
+  },
+  {
+    name: "ROG Phone 7",
+    brand: "ASUS",
+    type: "android",
+    fpsCap: 165,
+    refreshRate: 165,
+    touchResponse: 99,
+    gyroStability: 98,
+    screenSize: 6.78
+  },
+  {
+    name: "RedMagic 8 Pro",
+    brand: "RedMagic",
+    type: "android",
+    fpsCap: 165,
+    refreshRate: 165,
+    touchResponse: 98,
+    gyroStability: 97,
+    screenSize: 6.8
+  },
+  {
+    name: "Black Shark 5 Pro",
+    brand: "Black Shark",
+    type: "android",
+    fpsCap: 144,
+    refreshRate: 144,
+    touchResponse: 96,
+    gyroStability: 95,
+    screenSize: 6.67
+  },
 
   // ===== GOOGLE PIXEL =====
   {
@@ -408,6 +545,16 @@ export const androidDevices = [
     refreshRate: 120,
     touchResponse: 90,
     gyroStability: 92,
+    screenSize: 6.7
+  },
+  {
+    name: "Pixel 7 Pro",
+    brand: "Google",
+    type: "android",
+    fpsCap: 120,
+    refreshRate: 120,
+    touchResponse: 88,
+    gyroStability: 90,
     screenSize: 6.7
   }
 

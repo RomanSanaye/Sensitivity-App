@@ -143,3 +143,27 @@ button:active {
     flex-direction: column;
   }
 }
+
+.reset-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.reset-btn:hover {
+  background: #ff3333;
+  transform: translateY(-2px);
+}
+
+.reset-btn:active {
+  background: #cc0000;
+  transform: translateY(0);
+}

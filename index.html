@@ -16,6 +16,7 @@
 
       <!-- PLATFORM -->
       <div class="card">
+        <input id="phone" type="text" placeholder="Search device (optional)" />
         <h2>Platform</h2>
 
         <div class="toggle-group">
@@ -37,13 +38,13 @@
       <div class="card">
         <h2>Device</h2>
 
-        <input
-          id="phone"
-          type="text"
-          placeholder="Search or type device (optional)"
-        />
+        <select id="deviceModel">
+          <option value="" disabled selected hidden>
+            Select your device model
+          </option>
 
-        <select id="deviceModel"></select>
+          <option value="auto">🤖 Auto-detect device (recommended)</option>
+        </select>
       </div>
 
       <!-- FPS -->
@@ -70,25 +71,31 @@
         </div>
       </div>
 
-      <!-- MODE -->
+      <!-- PLAYSTYLE -->
       <div class="card">
-        <h2>Mode</h2>
+        <h2>Playstyle</h2>
 
         <div class="toggle-group">
           <button
-            id="mode-standard"
-            onclick="setMode('standard')"
+            id="style-balanced"
+            onclick="setStyle('balanced')"
             class="active"
           >
-            Standard
+            Balanced
           </button>
 
-          <button id="mode-pro" onclick="setMode('pro')">Pro</button>
+          <button id="style-aggressive" onclick="setStyle('aggressive')">
+            Aggressive
+          </button>
+
+          <button id="style-sniper" onclick="setStyle('sniper')">Sniper</button>
         </div>
       </div>
 
       <!-- GENERATE -->
-      <button onclick="generate()">Generate Sensitivity</button>
+      <div class="card">
+        <button onclick="generate()">🎯 Generate Sensitivity</button>
+      </div>
 
       <!-- RESULTS -->
       <div class="card result" id="results" style="display: none">
@@ -104,11 +111,10 @@
         <h2>🔥 ADS Gyro</h2>
         <p id="adsGyro"></p>
 
-        <!-- Cloud code will be injected here -->
+        <button class="reset-btn" onclick="resetApp()">🔄 Reset</button>
       </div>
     </div>
 
-    <!-- IMPORTANT: MUST BE MODULE -->
     <script type="module" src="app.js"></script>
   </body>
 </html>
