@@ -26,8 +26,9 @@ h1 {
 /* CARD */
 .card {
   background: #161616;
-  padding: 14px;
+  padding: 20px 14px;
   margin-bottom: 12px;
+  margin-top: 12px;
   border-radius: 14px;
   border: 1px solid #222;
 }
@@ -66,6 +67,9 @@ input {
   font-size: 14px;
 }
 
+
+
+
 /* DEVICE SELECT HOVER */
 #deviceModel:hover {
   background: #222;
@@ -86,6 +90,7 @@ select {
 .toggle-group {
   display: flex;
   gap: 10px;
+  transition: 0.2s ease;
 }
 
 /* TOGGLE BUTTONS */
@@ -167,3 +172,79 @@ button:active {
   background: #cc0000;
   transform: translateY(0);
 }
+
+/* ================= SCREEN TRANSITION ================= */
+
+#inputScreen,
+#resultScreen {
+transition: opacity 0.25s ease;
+}
+
+/* Optional fade effect (future ready) */
+.hidden-screen {
+opacity: 0;
+pointer-events: none;
+}
+
+.active-screen {
+opacity: 1;
+}
+
+/* ================= RESULT SCREEN IMPROVEMENTS ================= */
+
+/* Make result cards slightly more prominent */
+#resultScreen .card {
+border: 1px solid #00ffcc33;
+background: #141414;
+}
+
+/* Bigger titles in result mode */
+#resultScreen h2 {
+font-size: 16px;
+margin-bottom: 12px;
+}
+
+/* 🔥 IMPORTANT: improve readability of numbers */
+.result p {
+white-space: pre-line;
+font-size: 16px;
+line-height: 1.6;
+font-weight: 500;
+}
+
+/* Add spacing between value blocks */
+.result p br {
+margin-bottom: 6px;
+}
+
+/* ================= RESULT SCREEN LAYOUT ================= */
+
+/* Give result screen a bit more breathing room */
+#resultScreen {
+padding-bottom: 40px;
+}
+
+/* ================= RESET BUTTON UPGRADE ================= */
+
+.reset-btn {
+margin-top: 30px;
+font-size: 17px;
+border-radius: 10px;
+}
+
+/* ================= SMALL MOBILE POLISH ================= */
+
+@media (max-width: 480px) {
+
+/* Slightly larger tap targets */
+button {
+font-size: 17px;
+padding: 16px;
+}
+
+/* Better spacing in cards */
+.card {
+padding: 18px 14px;
+}
+}
+

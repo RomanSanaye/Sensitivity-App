@@ -5,21 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Sensitivity Pro</title>
-
+    <link rel="manifest" href="/manifest.json" />
     <link rel="stylesheet" href="style.css" />
     <meta name="theme-color" content="#111111" />
   </head>
 
   <body>
-    <div class="app">
+    <!-- ================= INPUT SCREEN ================= -->
+    <div id="inputScreen" class="app">
       <h1>🎮 Sensitivity Pro</h1>
 
-      <!-- PLATFORM -->
+      <!-- DEVICE -->
       <div class="card">
-        <input id="phone" type="text" placeholder="Search device (optional)" />
-        <h2>Platform</h2>
+        <h2>Device & Platform</h2>
 
-        <div class="toggle-group">
+        <input
+          id="phone"
+          type="text"
+          placeholder="Search device"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+
+        <br /><br />
+
+        <div class="toggle-group" id="platform-group">
           <button
             id="platform-android"
             onclick="setPlatform('android')"
@@ -32,17 +44,11 @@
             iPhone / iOS
           </button>
         </div>
-      </div>
-
-      <!-- DEVICE -->
-      <div class="card">
-        <h2>Device</h2>
 
         <select id="deviceModel">
           <option value="" disabled selected hidden>
             Select your device model
           </option>
-
           <option value="auto">🤖 Auto-detect device (recommended)</option>
         </select>
       </div>
@@ -50,7 +56,6 @@
       <!-- FPS -->
       <div class="card">
         <h2>FPS</h2>
-
         <select id="fps">
           <option value="60">60 FPS</option>
           <option value="90">90 FPS</option>
@@ -61,12 +66,10 @@
       <!-- GYRO -->
       <div class="card">
         <h2>Gyroscope</h2>
-
         <div class="toggle-group">
           <button id="gyro-on" onclick="setGyro('on')" class="active">
             ON
           </button>
-
           <button id="gyro-off" onclick="setGyro('off')">OFF</button>
         </div>
       </div>
@@ -74,7 +77,6 @@
       <!-- PLAYSTYLE -->
       <div class="card">
         <h2>Playstyle</h2>
-
         <div class="toggle-group">
           <button
             id="style-balanced"
@@ -83,11 +85,9 @@
           >
             Balanced
           </button>
-
           <button id="style-aggressive" onclick="setStyle('aggressive')">
             Aggressive
           </button>
-
           <button id="style-sniper" onclick="setStyle('sniper')">Sniper</button>
         </div>
       </div>
@@ -96,23 +96,33 @@
       <div class="card">
         <button onclick="generate()">🎯 Generate Sensitivity</button>
       </div>
+    </div>
 
-      <!-- RESULTS -->
-      <div class="card result" id="results" style="display: none">
+    <!-- ================= RESULT SCREEN ================= -->
+    <div id="resultScreen" class="app" style="display: none">
+      <h1>🎯 Your Sensitivity</h1>
+
+      <div class="card result">
         <h2>📷 Camera</h2>
         <p id="camera"></p>
+      </div>
 
+      <div class="card result">
         <h2>🔫 ADS</h2>
         <p id="ads"></p>
+      </div>
 
+      <div class="card result">
         <h2>📱 Gyro</h2>
         <p id="gyroResult"></p>
+      </div>
 
+      <div class="card result">
         <h2>🔥 ADS Gyro</h2>
         <p id="adsGyro"></p>
-
-        <button class="reset-btn" onclick="resetApp()">🔄 Reset</button>
       </div>
+
+      <button class="reset-btn" onclick="resetApp()">🔄 Reset</button>
     </div>
 
     <script type="module" src="app.js"></script>
