@@ -11,6 +11,9 @@ let selectedGyro = "on";
 let selectedStyle = "balanced";
 let selectedFps = "60"; // FPS dropdown state
 
+let currentMode = "generate"; // "generate" or "saved"
+let currentSavedIndex = null;
+
 // =====================
 // ELEMENTS
 // =====================
@@ -38,6 +41,9 @@ const deviceList = document.getElementById("deviceList");
 
 const searchInput = document.getElementById("phone");
 
+const saveBtn = document.getElementById("saveBtn");
+const openSavedBtn = document.getElementById("openSavedBtn");
+
 // =====================
 // PLATFORM EVENTS
 // =====================
@@ -47,7 +53,6 @@ platformIOS.addEventListener("click", () => setPlatform("ios"));
 function setPlatform(type) {
   selectedPlatform = type;
 
-  // FIX: Reset device selection when switching platform
   selectedDevice = null;
   deviceSelected.textContent = "Select your device model";
 
@@ -58,7 +63,6 @@ function setPlatform(type) {
 
   loadDevices();
 }
-
 
 // =====================
 // GYRO EVENTS
@@ -100,7 +104,6 @@ fpsSelected.addEventListener("click", (e) => {
   fpsDropdown.classList.toggle("open");
 });
 
-// FPS item click
 document.querySelectorAll("#fpsList .dropdown-item").forEach(item => {
   const value = item.getAttribute("data-value");
   if (value === selectedFps) item.classList.add("active");
@@ -153,7 +156,7 @@ function loadDevices() {
 }
 
 // =====================
-// DEVICE ITEM CLICK HANDLER
+// DEVICE CLICK
 // =====================
 function attachDeviceEvents() {
   document.querySelectorAll("#deviceList .dropdown-item").forEach(item => {
@@ -178,7 +181,7 @@ function attachDeviceEvents() {
 }
 
 // =====================
-// GLOBAL CLICK → CLOSE DROPDOWNS
+// GLOBAL CLOSE
 // =====================
 document.addEventListener("click", () => {
   fpsDropdown.classList.remove("open");
@@ -186,17 +189,15 @@ document.addEventListener("click", () => {
 });
 
 // =====================
-// SMART DEVICE SEARCH
+// SMART SEARCH
 // =====================
 searchInput.addEventListener("input", function () {
   const query = this.value.toLowerCase();
   const platformButtons = document.getElementById("platform-group");
 
-  // When search is cleared
   if (query.trim() === "") {
     platformButtons.style.display = "flex";
 
-    // FIX: restore platform state from UI
     if (platformIOS.classList.contains("active")) {
       selectedPlatform = "ios";
     } else {
@@ -205,7 +206,7 @@ searchInput.addEventListener("input", function () {
 
     loadDevices();
     loadDevices();
-    
+
     deviceSelected.textContent = "Select your device model";
     selectedDevice = null;
 
@@ -259,7 +260,6 @@ searchInput.addEventListener("input", function () {
   deviceDropdown.classList.add("open");
 });
 
-
 // =====================
 // DEVICE FIND
 // =====================
@@ -269,26 +269,26 @@ function getDevice(name) {
 }
 
 // =====================
-// BASE PROFILES
+// BASE PROFILE
 // =====================
 const baseProfile = {
   iphone: {
     camera: { tpp: 110, fpp: 105, tppAim: 95, fppAim: 90, redDot: 55, x2: 35, x3: 25, x4: 20, x6: 12, x8: 10 },
-    ads:    { tpp: 95,  fpp: 90,  tppAim: 85, fppAim: 80, redDot: 55, x2: 35, x3: 25, x4: 18, x6: 12, x8: 10 },
-    gyro:   { tpp: 330, fpp: 330, tppAim: 300, fppAim: 300, redDot: 320, x2: 280, x3: 240, x4: 190, x6: 120, x8: 90 },
-    adsGyro:{ tpp: 300, fpp: 300, tppAim: 280, fppAim: 280, redDot: 300, x2: 250, x3: 200, x4: 150, x6: 100, x8: 80 }
+    ads: { tpp: 95, fpp: 90, tppAim: 85, fppAim: 80, redDot: 55, x2: 35, x3: 25, x4: 18, x6: 12, x8: 10 },
+    gyro: { tpp: 330, fpp: 330, tppAim: 300, fppAim: 300, redDot: 320, x2: 280, x3: 240, x4: 190, x6: 120, x8: 90 },
+    adsGyro: { tpp: 300, fpp: 300, tppAim: 280, fppAim: 280, redDot: 300, x2: 250, x3: 200, x4: 150, x6: 100, x8: 80 }
   },
 
   android: {
     camera: { tpp: 125, fpp: 120, tppAim: 105, fppAim: 100, redDot: 65, x2: 40, x3: 30, x4: 22, x6: 14, x8: 10 },
-    ads:    { tpp: 105, fpp: 100, tppAim: 95,  fppAim: 90,  redDot: 60, x2: 40, x3: 30, x4: 22, x6: 14, x8: 10 },
-    gyro:   { tpp: 370, fpp: 370, tppAim: 340, fppAim: 340, redDot: 350, x2: 300, x3: 260, x4: 200, x6: 130, x8: 90 },
-    adsGyro:{ tpp: 320, fpp: 320, tppAim: 300, fppAim: 300, redDot: 320, x2: 270, x3: 220, x4: 160, x6: 110, x8: 80 }
+    ads: { tpp: 105, fpp: 100, tppAim: 95, fppAim: 90, redDot: 60, x2: 40, x3: 30, x4: 22, x6: 14, x8: 10 },
+    gyro: { tpp: 370, fpp: 370, tppAim: 340, fppAim: 340, redDot: 350, x2: 300, x3: 260, x4: 200, x6: 130, x8: 90 },
+    adsGyro: { tpp: 320, fpp: 320, tppAim: 300, fppAim: 300, redDot: 320, x2: 270, x3: 220, x4: 160, x6: 110, x8: 80 }
   }
 };
 
 // =====================
-// PLAYSTYLE FACTOR
+// STYLE FACTOR
 // =====================
 function styleFactor() {
   if (selectedStyle === "aggressive") return 1.10;
@@ -297,7 +297,7 @@ function styleFactor() {
 }
 
 // =====================
-// FORMAT OUTPUT
+// FORMAT
 // =====================
 function format(obj) {
   return `
@@ -352,6 +352,12 @@ function resetApp() {
   deviceSelected.textContent = "Select your device model";
 
   loadDevices();
+
+  // FIX ADDED
+  currentMode = "generate";
+  currentSavedIndex = null;
+
+  updateResultButton();
 }
 
 // =====================
@@ -406,6 +412,295 @@ function generate() {
     document.getElementById("gyroResult").innerText = "Gyro: None";
     document.getElementById("adsGyro").innerText = "Gyro ADS: None";
   }
+
+  currentMode = "generate";
+  currentSavedIndex = null;
+
+  updateResultButton();
+}
+
+// ===================== SAVE / DELETE =====================
+saveBtn.addEventListener("click", () => {
+  if (currentMode === "saved") {
+    deleteSaved();
+  } else {
+    saveSensitivity();
+  }
+});
+
+// ===================== DELETE SAVED =====================
+function deleteSaved() {
+  let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
+
+  if (currentSavedIndex === null) return;
+
+  saved.splice(currentSavedIndex, 1);
+  localStorage.setItem("sensitivities", JSON.stringify(saved));
+
+  const modal = document.getElementById("saveModal");
+  const modalMessage = document.getElementById("modalMessage");
+  const input = document.getElementById("saveNameInput");
+  const confirmBtn = document.getElementById("confirmSaveBtn");
+  const cancelBtn = document.getElementById("cancelSaveBtn");
+
+  // Hide input + buttons
+  input.style.display = "none";
+  confirmBtn.style.display = "none";
+  cancelBtn.style.display = "none";
+
+  modalMessage.innerText = "🗑 Deleted successfully!";
+  modal.style.display = "flex";
+
+  setTimeout(() => {
+    modal.style.display = "none";
+
+    // Reset modal UI
+    input.style.display = "block";
+    confirmBtn.style.display = "block";
+    cancelBtn.style.display = "block";
+    modalMessage.innerText = "";
+
+    // ✅ CRITICAL: Go back to saved list after deletion
+    goToSavedListAfterDelete();
+
+  }, 800);
+}
+
+// New helper function
+function goToSavedListAfterDelete() {
+  // Hide result screen
+  document.getElementById("resultScreen").style.display = "none";
+  
+  // Show input screen as background
+  document.getElementById("inputScreen").style.display = "block";
+  
+  // Show saved list overlay
+  showSaved();
+  
+  // Reset current mode so Save button goes back to "Save" mode
+  currentMode = "generate";
+  currentSavedIndex = null;
+  
+  updateResultButton();
+}
+
+// ===================== SAVE SENSITIVITY =====================
+function saveSensitivity() {
+
+  const modal = document.getElementById("saveModal");
+  const input = document.getElementById("saveNameInput");
+  const confirmBtn = document.getElementById("confirmSaveBtn");
+  const cancelBtn = document.getElementById("cancelSaveBtn");
+  const modalMessage = document.getElementById("modalMessage");
+
+  // RESET UI STATE FIRST
+  input.style.display = "block";
+  confirmBtn.style.display = "block";
+  cancelBtn.style.display = "block";
+  modalMessage.innerText = "";
+
+  modal.style.display = "flex";
+  input.value = "";
+  input.focus();
+
+  cancelBtn.onclick = () => {
+    modal.style.display = "none";
+  };
+
+  confirmBtn.onclick = () => {
+
+    const name = input.value;
+    if (!name || name.trim() === "") {
+       modalMessage.innerText = "⚠ Please enter a name!";
+       modalMessage.style.color = "#ff4d4d";
+       return;
+   }
+
+    let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
+
+    const data = {
+      name: name.trim(),
+      settings: {
+        platform: selectedPlatform,
+        fps: selectedFps,
+        gyro: selectedGyro,
+        style: selectedStyle,
+        device: selectedDevice
+      },
+      result: {
+        camera: document.getElementById("camera").innerText,
+        ads: document.getElementById("ads").innerText,
+        gyro: document.getElementById("gyroResult").innerText,
+        adsGyro: document.getElementById("adsGyro").innerText
+      }
+    };
+
+    saved.push(data);
+    localStorage.setItem("sensitivities", JSON.stringify(saved));
+
+    modalMessage.innerText = "✅ Saved successfully!";
+
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 800);
+  };
+}
+
+// ===================== SAVED LIST =====================
+openSavedBtn.addEventListener("click", showSaved);
+
+function showSaved() {
+  const container = document.getElementById("savedContainer");
+  const listDiv = document.getElementById("savedList");
+
+  // Make sure container is visible and styled
+  container.style.display = "block";
+  
+  let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
+
+  // Remove existing close button if any
+  const existingCloseBtn = container.querySelector(".close-saved-btn");
+  if (existingCloseBtn) {
+    existingCloseBtn.remove();
+  }
+
+  // Create close button (cross icon)
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "close-saved-btn";
+  closeBtn.innerHTML = "✕";
+  closeBtn.setAttribute("aria-label", "Close");
+  
+  // Style to match your theme
+  closeBtn.style.cssText = `
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    z-index: 1001;
+  `;
+  
+  closeBtn.onmouseover = () => {
+    closeBtn.style.background = "#00ffcc";
+    closeBtn.style.color = "black";
+    closeBtn.style.transform = "scale(1.05)";
+  };
+  
+  closeBtn.onmouseout = () => {
+    closeBtn.style.background = "transparent";
+    closeBtn.style.color = "#00ffcc";
+    closeBtn.style.transform = "scale(1)";
+  };
+  
+  closeBtn.onclick = () => {
+    container.style.display = "none";
+  };
+  
+  container.appendChild(closeBtn);
+
+  if (saved.length === 0) {
+    listDiv.innerHTML = `
+      <p style="text-align: center; padding: 20px; color: #888;">📭 No saved sensitivities yet.</p>
+      
+    `;
+    return;
+  }
+
+  listDiv.innerHTML = saved.map((item, index) => {
+    return `
+      <div class="card saved-item" data-index="${index}" style="margin:10px 0; padding:12px; cursor:pointer; background: #141414; border: 1px solid #222; border-radius: 10px; transition: all 0.2s; position: relative;">
+        <h3 style="margin: 0 0 5px 0; color: #00ffcc; font-size: 16px;">📌 ${item.name}</h3>
+        <p style="margin: 0; color: #aaa; font-size: 12px;">
+          ${item.settings.platform.toUpperCase()} • ${item.settings.fps} FPS • ${item.settings.style}
+        </p>
+      </div>
+    `;
+  }).join("");
+
+  // Add hover effects and click handlers
+  document.querySelectorAll(".saved-item").forEach(item => {
+    item.addEventListener("mouseover", () => {
+      item.style.background = "#1a1a1a";
+      item.style.borderColor = "#00ffcc";
+      item.style.transform = "translateX(3px)";
+    });
+    item.addEventListener("mouseout", () => {
+      item.style.background = "#141414";
+      item.style.borderColor = "#222";
+      item.style.transform = "translateX(0)";
+    });
+    item.addEventListener("click", () => {
+      const index = item.getAttribute("data-index");
+      loadSaved(index);
+      container.style.display = "none"; // Close when loading
+    });
+  });
+}
+
+// ===================== LOAD SAVED =====================
+function loadSaved(index) {
+
+  let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
+  const item = saved[index];
+
+  if (!item) return;
+
+  selectedPlatform = item.settings.platform;
+  selectedFps = item.settings.fps;
+  selectedGyro = item.settings.gyro;
+  selectedStyle = item.settings.style;
+  selectedDevice = item.settings.device;
+
+  document.getElementById("savedContainer").style.display = "none";
+
+  document.getElementById("inputScreen").style.display = "none";
+  document.getElementById("resultScreen").style.display = "block";
+
+  document.getElementById("camera").innerText = item.result.camera;
+  document.getElementById("ads").innerText = item.result.ads;
+  document.getElementById("gyroResult").innerText = item.result.gyro;
+  document.getElementById("adsGyro").innerText = item.result.adsGyro;
+
+  currentMode = "saved";
+  currentSavedIndex = index;
+
+  updateResultButton();
+}
+
+// ===================== BUTTON TEXT =====================
+function updateResultButton() {
+  if (currentMode === "saved") {
+    saveBtn.innerText = "🗑 Delete";
+  } else {
+    saveBtn.innerText = "💾 Save Sensitivity";
+  }
+}
+
+// ===================== GO HOME =====================
+function goHome() {
+  document.getElementById("resultScreen").style.display = "none";
+  document.getElementById("inputScreen").style.display = "block";
+
+  document.getElementById("savedContainer").style.display = "none";
+
+  document.getElementById("savedList").innerHTML = "";
+
+  currentMode = "generate";
+  currentSavedIndex = null;
+
+  updateResultButton();
 }
 
 // =====================

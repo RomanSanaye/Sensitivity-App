@@ -15,7 +15,7 @@
     <div id="inputScreen" class="app">
       <h1>🎮 PUBG Sensitivity</h1>
 
-      <!-- DEVICE -->
+      <!-- DEVICE & PLATFORM -->
       <div class="card">
         <h2>Device & Platform</h2>
 
@@ -33,17 +33,16 @@
 
         <div class="toggle-group" id="platform-group">
           <button id="platform-android" class="active">Android</button>
-
           <button id="platform-ios">iPhone / iOS</button>
         </div>
+
         <br /><br />
 
-        <!-- DEVICE CUSTOM DROPDOWN -->
+        <!-- DEVICE DROPDOWN -->
         <div class="custom-dropdown" id="deviceDropdown">
           <div class="dropdown-selected" id="deviceSelected">
             Select your device model
           </div>
-
           <div class="dropdown-list" id="deviceList"></div>
         </div>
       </div>
@@ -65,9 +64,10 @@
         <input type="hidden" id="fps" value="60" />
       </div>
 
-      <!-- GYRO -->
+      <!-- GYROSCOPE -->
       <div class="card">
         <h2>Gyroscope</h2>
+
         <div class="toggle-group">
           <button id="gyro-on" class="active">ON</button>
           <button id="gyro-off">OFF</button>
@@ -77,6 +77,7 @@
       <!-- PLAYSTYLE -->
       <div class="card">
         <h2>Playstyle</h2>
+
         <div class="toggle-group">
           <button id="style-balanced" class="active">Balanced</button>
           <button id="style-aggressive">Aggressive</button>
@@ -84,9 +85,17 @@
         </div>
       </div>
 
-      <!-- GENERATE -->
+      <!-- ACTION BUTTONS -->
       <div class="card">
         <button id="generateBtn">🎯 Generate Sensitivity</button>
+        <br /><br />
+        <button id="openSavedBtn">📂 Saved Sensitivities</button>
+      </div>
+
+      <!-- SAVED LIST (UPDATED - removed card class) -->
+      <div id="savedContainer" style="display: none">
+        <h2>📂 Saved Sensitivities</h2>
+        <div id="savedList"></div>
       </div>
     </div>
 
@@ -114,7 +123,26 @@
         <p id="adsGyro"></p>
       </div>
 
-      <button class="reset-btn" id="resetBtn">🔄 Reset</button>
+      <button id="saveBtn">💾 Save Sensitivity</button>
+      <button class="reset-btn" id="resetBtn">⬅ Back</button>
+    </div>
+
+    <!-- ================= SAVE MODAL ================= -->
+    <div id="saveModal" class="modal-overlay" style="display: none">
+      <div class="modal-box">
+        <h2>Save Sensitivity</h2>
+
+        <p id="modalMessage" style="color: #00ffcc; margin-bottom: 10px"></p>
+
+        <input id="saveNameInput" type="text" placeholder="Enter a name..." />
+
+        <div class="modal-buttons">
+          <button id="confirmSaveBtn">Save</button>
+          <button id="cancelSaveBtn" style="background: #444; color: white">
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="app.js"></script>
