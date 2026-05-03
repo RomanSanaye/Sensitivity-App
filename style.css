@@ -1,4 +1,8 @@
-/* ================= GLOBAL RESET ================= */
+/* ========================================
+   🎮 PUBG MOBILE SENSITIVITY GENERATOR
+   ======================================== */
+
+/* ==================== 1. GLOBAL RESET & BASE ==================== */
 * {
   box-sizing: border-box;
 }
@@ -10,14 +14,14 @@ body {
   color: white;
 }
 
-/* ================= LAYOUT ================= */
+/* ==================== 2. LAYOUT ==================== */
 .app {
   max-width: 520px;
   margin: auto;
   padding: 16px;
 }
 
-/* ================= TYPOGRAPHY ================= */
+/* ==================== 3. TYPOGRAPHY ==================== */
 h1 {
   text-align: center;
   color: #00ffcc;
@@ -30,7 +34,7 @@ h2 {
   color: #00ffcc;
 }
 
-/* ================= CARD ================= */
+/* ==================== 4. CARDS ==================== */
 .card {
   background: #161616;
   padding: 20px 14px;
@@ -39,7 +43,7 @@ h2 {
   border: 1px solid #222;
 }
 
-/* ================= INPUT ================= */
+/* ==================== 5. INPUT FIELDS ==================== */
 input {
   width: 100%;
   padding: 12px;
@@ -50,7 +54,47 @@ input {
   outline: none;
 }
 
-/* ================= TOGGLE GROUP ================= */
+/* ==================== 6. BUTTONS ==================== */
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #00ffcc;
+  font-weight: bold;
+  font-size: 16px;
+  color: black;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+/* Reset Button */
+.reset-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: darkgreen;
+  color: white;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.reset-btn:hover {
+  background: green;
+  transform: translateY(-2px);
+}
+
+.reset-btn:active {
+  transform: translateY(0);
+}
+
+/* ==================== 7. TOGGLE GROUPS (Platform, Gyro, Playstyle) ==================== */
 .toggle-group {
   display: flex;
   gap: 10px;
@@ -79,243 +123,7 @@ input {
   border: none;
 }
 
-/* ================= GLOBAL BUTTON ================= */
-button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  background: #00ffcc;
-  font-weight: bold;
-  font-size: 16px;
-  color: black;
-  cursor: pointer;
-}
-
-button:active {
-  transform: scale(0.99);
-}
-
-/* ================= RESULT ================= */
-.result p {
-  white-space: pre-line;
-  font-size: 16px;
-  line-height: 1.6;
-  font-weight: 500;
-}
-
-/* ================= RESULT SCREEN ================= */
-#resultScreen {
-  padding-bottom: 40px;
-}
-
-#resultScreen .card {
-  border: 1px solid #00ffcc33;
-  background: #141414;
-}
-
-#resultScreen h2 {
-  font-size: 16px;
-  margin-bottom: 12px;
-}
-
-/* ================= RESET BUTTON ================= */
-.reset-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  background: darkgreen;
-  color: white;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.reset-btn:hover {
-  background: green;
-  transform: translateY(-2px);
-}
-
-.reset-btn:active {
-  transform: translateY(0);
-}
-
-/* ================= MODAL ================= */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.modal-box {
-  background: #161616;
-  padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 350px;
-  text-align: center;
-  border: 1px solid #00ffcc;
-}
-
-.modal-box h2 {
-  margin-bottom: 12px;
-  color: #00ffcc;
-}
-
-.modal-box input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: none;
-  background: #222;
-  color: white;
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.modal-buttons button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-/* ================= SAVED CONTAINER ================= */
-#savedContainer {
-  position: relative;
-  width: 100%;
-  background: #161616;
-  border: 1px solid #00ffcc;
-  border-radius: 14px;
-  padding: 20px;
-  margin-top: 20px;
-  display: none;
-  overflow-x: hidden;
-}
-
-#savedContainer h2 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  padding-right: 30px;
-  color: #00ffcc;
-}
-
-#savedContainer::-webkit-scrollbar {
-  width: 8px;
-}
-
-#savedContainer::-webkit-scrollbar-track {
-  background: #222;
-  border-radius: 10px;
-}
-
-#savedContainer::-webkit-scrollbar-thumb {
-  background: #00ffcc;
-  border-radius: 10px;
-}
-
-#savedContainer::-webkit-scrollbar-thumb:hover {
-  background: #00e6b8;
-}
-
-/* ================= SAVED LIST ================= */
-#savedList {
-  margin-top: 10px;
-  max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 5px; /* Add padding to accommodate transform */
-}
-
-/* ================= SAVED ITEMS ================= */
-.saved-item {
-  margin: 10px 0;
-  padding: 12px;
-  cursor: pointer;
-  background: #141414;
-  border: 1px solid #222;
-  border-radius: 10px;
-  transition: all 0.2s ease;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.saved-item:hover {
-  background: #1a1a1a;
-  border-color: #00ffcc;
-  transform: translateX(3px);
-}
-
-.saved-item h3 {
-  margin: 0 0 5px 0;
-  color: #00ffcc;
-  font-size: 16px;
-  word-break: break-word;
-}
-
-.saved-item p {
-  margin: 0;
-  color: #aaa;
-  font-size: 12px;
-  word-break: break-word;
-}
-
-/* ================= CLOSE BUTTON ================= */
-.close-saved-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 30px;
-  height: 30px;
-  background: transparent;
-  color: #00ffcc;
-  border: 1px solid #00ffcc;
-  border-radius: 50%;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  padding: 0;
-  z-index: 1;
-}
-
-.close-saved-btn:hover {
-  background: #00ffcc;
-  color: black;
-  transform: scale(1.05);
-}
-
-/* ================= DELETE ICON ================= */
-.delete-icon {
-  font-size: 16px;
-  cursor: pointer;
-  color: #ff4d4d;
-  flex-shrink: 0;
-  padding: 6px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s;
-}
-
-.delete-icon:hover {
-  background: rgba(255, 77, 77, 0.15);
-}
-
-/* ================= DROPDOWN ================= */
+/* ==================== 8. DROPDOWN (FPS & Device) ==================== */
 .custom-dropdown {
   position: relative;
   width: 100%;
@@ -376,7 +184,7 @@ button:active {
   transform: translateY(0);
 }
 
-/* ================= DROPDOWN ITEMS ================= */
+/* Dropdown Items */
 .dropdown-item {
   padding: 12px 14px;
   cursor: pointer;
@@ -401,7 +209,7 @@ button:active {
   font-style: italic;
 }
 
-/* ================= SCROLLBAR ================= */
+/* Dropdown Scrollbar */
 .custom-dropdown .dropdown-list {
   scrollbar-width: thin;
   scrollbar-color: #00ffcc #111;
@@ -426,7 +234,204 @@ button:active {
   background: #00e6b8;
 }
 
-/* ================= MOBILE ================= */
+/* ==================== 9. RESULT SCREEN ==================== */
+#resultScreen {
+  padding-bottom: 40px;
+}
+
+#resultScreen .card {
+  border: 1px solid #00ffcc33;
+  background: #141414;
+}
+
+#resultScreen h2 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.result p {
+  white-space: pre-line;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ==================== 10. SAVED SENSITIVITIES CONTAINER ==================== */
+#savedContainer {
+  position: relative;
+  width: 100%;
+  background: #161616;
+  border: 1px solid #00ffcc;
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 20px;
+  display: none;
+  overflow-x: hidden;
+}
+
+#savedContainer h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding-right: 30px;
+  color: #00ffcc;
+}
+
+/* Saved Container Scrollbar */
+#savedContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+#savedContainer::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 10px;
+}
+
+#savedContainer::-webkit-scrollbar-thumb {
+  background: #00ffcc;
+  border-radius: 10px;
+}
+
+#savedContainer::-webkit-scrollbar-thumb:hover {
+  background: #00e6b8;
+}
+
+/* ==================== 11. SAVED LIST ==================== */
+#savedList {
+  margin-top: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+}
+
+/* ==================== 12. SAVED ITEMS ==================== */
+.saved-item {
+  margin: 10px 0;
+  padding: 12px;
+  cursor: pointer;
+  background: #141414;
+  border: 1px solid #222;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.saved-item:hover {
+  background: #1a1a1a;
+  border-color: #00ffcc;
+  transform: translateX(3px);
+}
+
+.saved-item h3 {
+  margin: 0 0 5px 0;
+  color: #00ffcc;
+  font-size: 16px;
+  word-break: break-word;
+}
+
+.saved-item p {
+  margin: 0;
+  color: #aaa;
+  font-size: 12px;
+  word-break: break-word;
+}
+
+/* ==================== 13. CLOSE BUTTON (Saved List) ==================== */
+.close-saved-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  color: #00ffcc;
+  border: 1px solid #00ffcc;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+  z-index: 1;
+}
+
+.close-saved-btn:hover {
+  background: #00ffcc;
+  color: black;
+  transform: scale(1.05);
+}
+
+/* ==================== 14. DELETE ICON ==================== */
+.delete-icon {
+  font-size: 16px;
+  cursor: pointer;
+  color: #ff4d4d;
+  flex-shrink: 0;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.delete-icon:hover {
+  background: rgba(255, 77, 77, 0.15);
+}
+
+/* ==================== 15. MODAL (Save Dialog) ==================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #161616;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+  border: 1px solid #00ffcc;
+}
+
+.modal-box h2 {
+  margin-bottom: 12px;
+  color: #00ffcc;
+}
+
+.modal-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: none;
+  background: #222;
+  color: white;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+
+/* ==================== 16. MOBILE RESPONSIVE ==================== */
 @media (max-width: 480px) {
   .toggle-group {
     flex-direction: column;
