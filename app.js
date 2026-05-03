@@ -100,19 +100,16 @@ fpsSelected.addEventListener("click", (e) => {
 
 document.querySelectorAll("#fpsList .dropdown-item").forEach(item => {
   const value = item.getAttribute("data-value");
-
   if (value === selectedFps) item.classList.add("active");
 
   item.addEventListener("click", (e) => {
     e.stopPropagation();
-
     selectedFps = value;
     fpsHidden.value = value;
     fpsSelected.textContent = value + " FPS";
 
     document.querySelectorAll("#fpsList .dropdown-item")
       .forEach(i => i.classList.remove("active"));
-
     item.classList.add("active");
     fpsDropdown.classList.remove("open");
   });
@@ -145,29 +142,30 @@ function loadDevices() {
     item.textContent = d.name;
     deviceList.appendChild(item);
   });
+
+  attachDeviceEvents();
 }
 
 // =====================
 // DEVICE CLICK
 // =====================
-deviceList.addEventListener("click", (e) => {
-  const item = e.target.closest(".dropdown-item");
-  if (!item) return;
+function attachDeviceEvents() {
+  document.querySelectorAll("#deviceList .dropdown-item").forEach(item => {
+    item.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const value = item.dataset.value;
+      selectedDevice = value;
+      deviceSelected.textContent = value === "auto"
+        ? "🤖 Auto-detect device (recommended)"
+        : value;
 
-  const value = item.dataset.value;
-  selectedDevice = value;
-
-  deviceSelected.textContent =
-    value === "auto"
-      ? "🤖 Auto-detect device (recommended)"
-      : value;
-
-  document.querySelectorAll("#deviceList .dropdown-item")
-    .forEach(i => i.classList.remove("active"));
-
-  item.classList.add("active");
-  deviceDropdown.classList.remove("open");
-});
+      document.querySelectorAll("#deviceList .dropdown-item")
+        .forEach(i => i.classList.remove("active"));
+      item.classList.add("active");
+      deviceDropdown.classList.remove("open");
+    });
+  });
+}
 
 // =====================
 // GLOBAL CLOSE
@@ -187,11 +185,13 @@ searchInput.addEventListener("input", function () {
   if (query.trim() === "") {
     platformButtons.style.display = "flex";
 
-    selectedPlatform = platformIOS.classList.contains("active")
-      ? "ios"
-      : "android";
+    if (platformIOS.classList.contains("active")) {
+      selectedPlatform = "ios";
+    } else {
+      selectedPlatform = "android";
+    }
 
-    loadDevices();
+    loadDevices(); // Removed duplicate call
     deviceSelected.textContent = "Select your device model";
     selectedDevice = null;
     deviceDropdown.classList.remove("open");
@@ -218,6 +218,7 @@ searchInput.addEventListener("input", function () {
         🤖 Auto-detect device (recommended)
       </div>
     `;
+    attachDeviceEvents();
     deviceDropdown.classList.add("open");
     return;
   }
@@ -236,8 +237,9 @@ searchInput.addEventListener("input", function () {
     deviceList.appendChild(item);
   });
 
-  selectedDevice = null;
-  deviceSelected.textContent = "Select your device model";
+  selectedDevice = matches[0].name;
+  deviceSelected.textContent = matches[0].name;
+  attachDeviceEvents();
   deviceDropdown.classList.add("open");
 });
 
@@ -310,50 +312,69 @@ function resetApp() {
 
   document.getElementById("resultScreen").style.display = "none";
   document.getElementById("inputScreen").style.display = "block";
+  document.getElementById("platform-group").style.display = "flex";
 
   platformAndroid.classList.add("active");
   platformIOS.classList.remove("active");
 
+  gyroOn.classList.add("active");
+  gyroOff.classList.remove("active");
+
+  styleBalanced.classList.add("active");
+  styleAggressive.classList.remove("active");
+  styleSniper.classList.remove("active");
+
   fpsHidden.value = "60";
   fpsSelected.textContent = "60 FPS";
 
+  document.querySelectorAll("#fpsList .dropdown-item")
+    .forEach(i => {
+      i.classList.toggle("active", i.getAttribute("data-value") === "60");
+    });
+
   deviceSelected.textContent = "Select your device model";
 
-  searchInput.value = "";
+  // Clear search input
+  if (searchInput) {
+    searchInput.value = "";
+  }
 
   loadDevices();
 
   currentMode = "generate";
   currentSavedIndex = null;
+  
   updateResultButton();
 }
 
 // =====================
-// GENERATE
+// GENERATE SENSITIVITY
+// =====================
+generateBtn.addEventListener("click", generate);
+
+// =====================
+// GENERATE SENSITIVITY
 // =====================
 generateBtn.addEventListener("click", generate);
 
 function generate() {
+  // Check if device is selected
+  if (!selectedDevice || selectedDevice === null) {
+    showNotification("⚠ Please select or search for your device first!", "#ff4d4d");
+    return;
+  }
+
   const fps = selectedFps || fpsHidden.value;
-
-  const device =
-    selectedDevice && selectedDevice !== "auto"
-      ? getDevice(selectedDevice)
-      : null;
-
-  const deviceBoost = device?.touchResponse
-    ? device.touchResponse / 100
-    : 1;
-
-  const fpsFactor =
-    fps === "60" ? 1.05 :
-    fps === "120" ? 0.95 :
-    1;
-
-  const finalFactor = styleFactor() * deviceBoost * fpsFactor;
+  let device = null;
+  
+  if (selectedDevice && selectedDevice !== "auto") {
+    device = getDevice(selectedDevice);
+  }
 
   const type = selectedPlatform === "ios" ? "iphone" : "android";
   const base = JSON.parse(JSON.stringify(baseProfile[type]));
+  const deviceBoost = device ? (device.touchResponse / 100) : 1;
+  const finalFactor = styleFactor() * deviceBoost * (fps === "60" ? 1.05 : fps === "120" ? 0.95 : 1);
 
   function apply(obj) {
     for (let k in obj) {
@@ -375,11 +396,395 @@ function generate() {
   document.getElementById("camera").innerText = format(base.camera);
   document.getElementById("ads").innerText = format(base.ads);
 
-  document.getElementById("gyroResult").innerText =
-    selectedGyro === "on" ? format(base.gyro) : "Gyro: None";
+  if (selectedGyro === "on") {
+    document.getElementById("gyroResult").innerText = format(base.gyro);
+    document.getElementById("adsGyro").innerText = format(base.adsGyro);
+  } else {
+    document.getElementById("gyroResult").innerText = "Gyro: None";
+    document.getElementById("adsGyro").innerText = "Gyro ADS: None";
+  }
 
-  document.getElementById("adsGyro").innerText =
-    selectedGyro === "on" ? format(base.adsGyro) : "Gyro ADS: None";
+  currentMode = "generate";
+  currentSavedIndex = null;
+  updateResultButton();
+}
+
+// Helper function to show notification
+function showNotification(message, color) {
+  // Check if notification already exists
+  let notification = document.getElementById("deviceNotification");
+  
+  if (notification) {
+    notification.remove();
+  }
+  
+  // Create notification element
+  notification = document.createElement("div");
+  notification.id = "deviceNotification";
+  notification.innerHTML = message;
+  notification.style.cssText = `
+    background: ${color};
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    animation: fadeInUp 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.2);
+  `;
+  
+  // Insert notification after the generate button
+  const generateBtn = document.getElementById("generateBtn");
+  generateBtn.parentNode.insertBefore(notification, generateBtn.nextSibling);
+  
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    if (notification) {
+      notification.style.animation = "fadeOutDown 0.3s ease";
+      setTimeout(() => {
+        if (notification) notification.remove();
+      }, 300);
+    }
+  }, 3000);
+}
+
+// =====================
+// SAVE / DELETE HANDLER
+// =====================
+saveBtn.addEventListener("click", () => {
+  if (currentMode === "saved") {
+    deleteSaved();
+  } else {
+    saveSensitivity();
+  }
+});
+
+// =====================
+// DELETE SAVED
+// =====================
+function deleteSaved() {
+  let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
+
+  if (currentSavedIndex === null) return;
+
+  saved.splice(currentSavedIndex, 1);
+  localStorage.setItem("sensitivities", JSON.stringify(saved));
+
+  const modal = document.getElementById("saveModal");
+  const modalMessage = document.getElementById("modalMessage");
+  const input = document.getElementById("saveNameInput");
+  const confirmBtn = document.getElementById("confirmSaveBtn");
+  const cancelBtn = document.getElementById("cancelSaveBtn");
+
+  input.style.display = "none";
+  confirmBtn.style.display = "none";
+  cancelBtn.style.display = "none";
+
+  modalMessage.innerText = "🗑 Deleted successfully!";
+  modal.style.display = "flex";
+
+  setTimeout(() => {
+    modal.style.display = "none";
+    input.style.display = "block";
+    confirmBtn.style.display = "block";
+    cancelBtn.style.display = "block";
+    modalMessage.innerText = "";
+    goToSavedListAfterDelete();
+  }, 800);
+}
+
+// =====================
+// GO TO SAVED LIST AFTER DELETE
+// =====================
+function goToSavedListAfterDelete() {
+  document.getElementById("resultScreen").style.display = "none";
+  document.getElementById("inputScreen").style.display = "block";
+  showSaved();
+  currentMode = "generate";
+  currentSavedIndex = null;
+  updateResultButton();
+}
+
+// =====================
+// SAVE SENSITIVITY
+// =====================
+// =====================
+// SAVE SENSITIVITY
+// =====================
+function saveSensitivity() {
+  const modal = document.getElementById("saveModal");
+  const input = document.getElementById("saveNameInput");
+  const confirmBtn = document.getElementById("confirmSaveBtn");
+  const cancelBtn = document.getElementById("cancelSaveBtn");
+  const modalMessage = document.getElementById("modalMessage");
+  const modalTitle = document.querySelector("#saveModal .modal-box h2");
+
+  // Reset UI - show everything
+  input.style.display = "block";
+  confirmBtn.style.display = "block";
+  cancelBtn.style.display = "block";
+  if (modalTitle) modalTitle.style.display = "block";
+  modalMessage.innerText = "";
+  modalMessage.style.color = "#00ffcc";
+
+  modal.style.display = "flex";
+  input.value = "";
+  input.focus();
+
+  // Remove existing listeners to prevent duplicates
+  const newConfirmBtn = confirmBtn.cloneNode(true);
+  const newCancelBtn = cancelBtn.cloneNode(true);
+  confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+  cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+  
+  // Update references
+  const newConfirm = newConfirmBtn;
+  const newCancel = newCancelBtn;
+
+  newCancel.onclick = () => {
+    modal.style.display = "none";
+    // Restore original content
+    input.style.display = "block";
+    confirmBtn.style.display = "block";
+    cancelBtn.style.display = "block";
+    if (modalTitle) modalTitle.style.display = "block";
+    modalMessage.innerText = "";
+  };
+
+  newConfirm.onclick = () => {
+    const name = input.value;
+    if (!name || name.trim() === "") {
+      modalMessage.innerText = "⚠ Please enter a name!";
+      modalMessage.style.color = "#ff4d4d";
+      return;
+    }
+
+    let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
+
+    const data = {
+      name: name.trim(),
+      settings: {
+        platform: selectedPlatform,
+        fps: selectedFps,
+        gyro: selectedGyro,
+        style: selectedStyle,
+        device: selectedDevice
+      },
+      result: {
+        camera: document.getElementById("camera").innerText,
+        ads: document.getElementById("ads").innerText,
+        gyro: document.getElementById("gyroResult").innerText,
+        adsGyro: document.getElementById("adsGyro").innerText
+      }
+    };
+
+    saved.push(data);
+    localStorage.setItem("sensitivities", JSON.stringify(saved));
+
+    // HIDE input and buttons - show ONLY the success message
+    input.style.display = "none";
+    newConfirm.style.display = "none";
+    newCancel.style.display = "none";
+    if (modalTitle) modalTitle.style.display = "none";
+    
+    modalMessage.innerText = "✅ Saved successfully!";
+    modalMessage.style.color = "#00ffcc";
+    modalMessage.style.fontSize = "18px";
+    modalMessage.style.padding = "20px";
+    modalMessage.style.margin = "0";
+
+    // Close modal after delay
+    setTimeout(() => {
+      modal.style.display = "none";
+      // Restore for next time
+      input.style.display = "block";
+      newConfirm.style.display = "block";
+      newCancel.style.display = "block";
+      if (modalTitle) modalTitle.style.display = "block";
+      modalMessage.innerText = "";
+      modalMessage.style.fontSize = "";
+      modalMessage.style.padding = "";
+    }, 1500);
+  };
+}
+
+// =====================
+// SHOW SAVED LIST
+// =====================
+openSavedBtn.addEventListener("click", showSaved);
+
+function showSaved() {
+  const container = document.getElementById("savedContainer");
+  const listDiv = document.getElementById("savedList");
+
+  container.style.display = "block";
+  
+  let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
+
+  // Remove existing close button
+  const existingCloseBtn = container.querySelector(".close-saved-btn");
+  if (existingCloseBtn) {
+    existingCloseBtn.remove();
+  }
+
+  // Create close button
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "close-saved-btn";
+  closeBtn.innerHTML = "✕";
+  closeBtn.setAttribute("aria-label", "Close");
+  
+  closeBtn.style.cssText = `
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    z-index: 1001;
+  `;
+  
+  closeBtn.onmouseover = () => {
+    closeBtn.style.background = "#00ffcc";
+    closeBtn.style.color = "black";
+    closeBtn.style.transform = "scale(1.05)";
+  };
+  
+  closeBtn.onmouseout = () => {
+    closeBtn.style.background = "transparent";
+    closeBtn.style.color = "#00ffcc";
+    closeBtn.style.transform = "scale(1)";
+  };
+  
+  closeBtn.onclick = () => {
+    container.style.display = "none";
+  };
+  
+  container.appendChild(closeBtn);
+
+  if (saved.length === 0) {
+    listDiv.innerHTML = `
+      <p style="text-align: center; padding: 20px; color: #888;">📭 No saved sensitivities yet.</p>
+    `;
+    return;
+  }
+
+  listDiv.innerHTML = saved.map((item, index) => {
+    return `
+      <div class="card saved-item" data-index="${index}" style="margin:10px 0; padding:12px; cursor:pointer; background: #141414; border: 1px solid #222; border-radius: 10px; transition: all 0.2s; position: relative;">
+        <h3 style="margin: 0 0 5px 0; color: #00ffcc; font-size: 16px;">📌 ${escapeHtml(item.name)}</h3>
+        <p style="margin: 0; color: #aaa; font-size: 12px;">
+          ${item.settings.platform.toUpperCase()} • ${item.settings.fps} FPS • ${item.settings.style}
+        </p>
+      </div>
+    `;
+  }).join("");
+
+  // Add hover effects and click handlers
+  document.querySelectorAll(".saved-item").forEach(item => {
+    item.addEventListener("mouseover", () => {
+      item.style.background = "#1a1a1a";
+      item.style.borderColor = "#00ffcc";
+      item.style.transform = "translateX(3px)";
+    });
+    item.addEventListener("mouseout", () => {
+      item.style.background = "#141414";
+      item.style.borderColor = "#222";
+      item.style.transform = "translateX(0)";
+    });
+    item.addEventListener("click", () => {
+      const index = item.getAttribute("data-index");
+      loadSaved(index);
+      container.style.display = "none";
+    });
+  });
+}
+
+// Helper function to prevent XSS attacks
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
+}
+
+// =====================
+// LOAD SAVED SENSITIVITY
+// =====================
+function loadSaved(index) {
+  let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
+  const item = saved[index];
+
+  if (!item) return;
+
+  selectedPlatform = item.settings.platform;
+  selectedFps = item.settings.fps;
+  selectedGyro = item.settings.gyro;
+  selectedStyle = item.settings.style;
+  selectedDevice = item.settings.device;
+
+  document.getElementById("savedContainer").style.display = "none";
+  document.getElementById("inputScreen").style.display = "none";
+  document.getElementById("resultScreen").style.display = "block";
+
+  document.getElementById("camera").innerText = item.result.camera;
+  document.getElementById("ads").innerText = item.result.ads;
+  document.getElementById("gyroResult").innerText = item.result.gyro;
+  document.getElementById("adsGyro").innerText = item.result.adsGyro;
+
+  currentMode = "saved";
+  currentSavedIndex = index;
+  updateResultButton();
+}
+
+// =====================
+// UPDATE BUTTON TEXT
+// =====================
+function updateResultButton() {
+  if (currentMode === "saved") {
+    saveBtn.innerText = "🗑 Delete";
+  } else {
+    saveBtn.innerText = "💾 Save Sensitivity";
+  }
+}
+
+// =====================
+// GO HOME
+// =====================
+function goHome() {
+  document.getElementById("resultScreen").style.display = "none";
+  document.getElementById("inputScreen").style.display = "block";
+  document.getElementById("savedContainer").style.display = "none";
+  document.getElementById("savedList").innerHTML = "";
+
+  document.getElementById("platform-group").style.display = "flex";
+  
+  // Clear search input
+  if (searchInput) {
+    searchInput.value = "";
+  }
+  
+  // Reset device dropdown
+  deviceSelected.textContent = "Select your device model";
+  selectedDevice = null;
+  
+  // Reload devices to reset the list
+  loadDevices();
 
   currentMode = "generate";
   currentSavedIndex = null;
@@ -387,31 +792,6 @@ function generate() {
 }
 
 // =====================
-// PWA INSTALL PROMPT
+// INITIALIZE
 // =====================
-let deferredPrompt = null;
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-function showInstallButton() {
-  const btn = document.createElement("button");
-  btn.innerText = "Install App";
-
-  btn.onclick = async () => {
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    btn.remove();
-  };
-
-  document.body.appendChild(btn);
-}
-
-document.addEventListener("click", () => {
-  if (deferredPrompt) {
-    showInstallButton();
-  }
-}, { once: true });
+loadDevices();
