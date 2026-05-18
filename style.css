@@ -3,6 +3,10 @@
    ======================================== */
 
 /* ==================== 1. GLOBAL RESET & BASE ==================== */
+html,
+body {
+  overflow-x: hidden;
+}
 * {
   box-sizing: border-box;
 }
@@ -12,6 +16,11 @@ body {
   font-family: Arial, sans-serif;
   background: #0b0b0b;
   color: white;
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
 }
 
 /* ==================== 2. LAYOUT ==================== */
@@ -256,55 +265,130 @@ button:active {
   font-weight: 500;
 }
 
-/* ==================== 10. SAVED SENSITIVITIES CONTAINER ==================== */
-#savedContainer {
+/* ==================== 10. SAVED CONTAINER ==================== */
+.saved-wrapper {
   position: relative;
+  display: inline-block;
   width: 100%;
-  background: #161616;
-  border: 1px solid #00ffcc;
-  border-radius: 14px;
-  padding: 20px;
-  margin-top: 20px;
-  display: none;
-  overflow-x: hidden;
 }
 
-#savedContainer h2 {
+#savedContainer {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 520px;
+
+  margin-bottom: 10px;
+
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(2px);
+
+  z-index: 9999;
+
+  display: none;
+}
+
+/* Show state */
+#savedContainer.show {
+  display: block;
+  justify-content: center;
+}
+
+/* Saved List Panel - Netflix style card */
+#savedList {
+  width: 100%;
+  max-width: 520px;
+
+  background: #161616;
+  border: 1px solid #00ffcc55;
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 55px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Heading inside saved list */
+#savedList h2 {
   margin-top: 0;
   margin-bottom: 15px;
   padding-right: 30px;
   color: #00ffcc;
 }
 
-/* Saved Container Scrollbar */
-#savedContainer::-webkit-scrollbar {
+/* Netflix-style pop animation */
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Fade in for overlay */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Close button positioning (inside the panel) */
+.close-saved-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  color: #00ffcc;
+  border: 1px solid #00ffcc;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+  z-index: 1;
+}
+
+.close-saved-btn:hover {
+  background: #00ffcc;
+  color: black;
+  transform: scale(1.05);
+}
+
+/* Scrollbar for saved list */
+#savedList::-webkit-scrollbar {
   width: 8px;
 }
 
-#savedContainer::-webkit-scrollbar-track {
+#savedList::-webkit-scrollbar-track {
   background: #222;
   border-radius: 10px;
 }
 
-#savedContainer::-webkit-scrollbar-thumb {
+#savedList::-webkit-scrollbar-thumb {
   background: #00ffcc;
   border-radius: 10px;
 }
 
-#savedContainer::-webkit-scrollbar-thumb:hover {
+#savedList::-webkit-scrollbar-thumb:hover {
   background: #00e6b8;
 }
 
-/* ==================== 11. SAVED LIST ==================== */
-#savedList {
-  margin-top: 10px;
-  max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 5px;
-}
-
-/* ==================== 12. SAVED ITEMS ==================== */
+/* ==================== 11. SAVED ITEMS ==================== */
 .saved-item {
   margin: 10px 0;
   padding: 12px;
@@ -337,35 +421,7 @@ button:active {
   word-break: break-word;
 }
 
-/* ==================== 13. CLOSE BUTTON (Saved List) ==================== */
-.close-saved-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 30px;
-  height: 30px;
-  background: transparent;
-  color: #00ffcc;
-  border: 1px solid #00ffcc;
-  border-radius: 50%;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  padding: 0;
-  z-index: 1;
-}
-
-.close-saved-btn:hover {
-  background: #00ffcc;
-  color: black;
-  transform: scale(1.05);
-}
-
-/* ==================== 14. DELETE ICON ==================== */
+/* ==================== 12. DELETE ICON ==================== */
 .delete-icon {
   font-size: 16px;
   cursor: pointer;
@@ -383,25 +439,28 @@ button:active {
   background: rgba(255, 77, 77, 0.15);
 }
 
-/* ==================== 15. MODAL (Save Dialog) ==================== */
+/* ==================== 13. MODAL (Save Dialog) ==================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 9999;
 }
 
 .modal-box {
   background: #161616;
+  width: calc(100vw - 32px);
+  max-width: 350px;
   padding: 20px;
   border-radius: 12px;
-  width: 90%;
-  max-width: 350px;
   text-align: center;
   border: 1px solid #00ffcc;
+  overflow: hidden;
+  position: relative;
+  margin-top: 25vh;
 }
 
 .modal-box h2 {
@@ -410,13 +469,15 @@ button:active {
 }
 
 .modal-box input {
-  width: 100%;
+  width: calc(100% - 0px);
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 8px;
   border: none;
   background: #222;
   color: white;
+  min-width: 0;
+  font-size: 16px;
 }
 
 .modal-buttons {
@@ -430,8 +491,7 @@ button:active {
   border-radius: 8px;
 }
 
-
-/* ==================== 16. MOBILE RESPONSIVE ==================== */
+/* ==================== 14. MOBILE RESPONSIVE ==================== */
 @media (max-width: 480px) {
   .toggle-group {
     flex-direction: column;
@@ -447,7 +507,7 @@ button:active {
   }
 }
 
-/* ================= NOTIFICATION ANIMATIONS ================= */
+/* ==================== 15. NOTIFICATION ANIMATIONS ==================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;

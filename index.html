@@ -89,13 +89,18 @@
       <div class="card">
         <button id="generateBtn">🎯 Generate Sensitivity</button>
         <br /><br />
-        <button id="openSavedBtn">📂 Saved Sensitivities</button>
       </div>
 
-      <!-- SAVED LIST (UPDATED - removed card class) -->
-      <div id="savedContainer" style="display: none">
-        <h2>📂 Saved Sensitivities</h2>
-        <div id="savedList"></div>
+      <!-- ================= SAVED BUTTON + POPUP ================= -->
+      <div class="saved-wrapper">
+        <button id="openSavedBtn">📂 Saved Sensitivities</button>
+
+        <div id="savedContainer">
+          <div id="savedList">
+            <h2>📂 Saved Sensitivities</h2>
+            <!-- JS will inject saved items here -->
+          </div>
+        </div>
       </div>
     </div>
 
@@ -146,6 +151,7 @@
     </div>
 
     <script type="module" src="app.js"></script>
+
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
