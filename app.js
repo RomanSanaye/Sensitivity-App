@@ -98,7 +98,7 @@ fpsSelected.addEventListener("click", (e) => {
   fpsDropdown.classList.toggle("open");
 });
 
-document.querySelectorAll("#fpsList .dropdown-item").forEach(item => {
+document.querySelectorAll("#fpsList .dropdown-item").forEach((item) => {
   const value = item.getAttribute("data-value");
   if (value === selectedFps) item.classList.add("active");
 
@@ -108,8 +108,9 @@ document.querySelectorAll("#fpsList .dropdown-item").forEach(item => {
     fpsHidden.value = value;
     fpsSelected.textContent = value + " FPS";
 
-    document.querySelectorAll("#fpsList .dropdown-item")
-      .forEach(i => i.classList.remove("active"));
+    document
+      .querySelectorAll("#fpsList .dropdown-item")
+      .forEach((i) => i.classList.remove("active"));
     item.classList.add("active");
     fpsDropdown.classList.remove("open");
   });
@@ -127,7 +128,31 @@ deviceSelected.addEventListener("click", (e) => {
 // LOAD DEVICES
 // =====================
 function loadDevices() {
-  const list = selectedPlatform === "android" ? androidDevices : iphoneDevices;
+  let list =
+    selectedPlatform === "android"
+      ? androidDevices
+      : [...iphoneDevices].sort((a, b) => {
+          const getVersion = (name) => {
+            const match = name.match(/iphone\s*(\d+)/i);
+            return match ? parseInt(match[1]) : 0;
+          };
+
+          const modelPriority = (name) => {
+            const n = name.toLowerCase();
+
+            if (n.includes("pro max")) return 1;
+            if (n.includes("pro")) return 2;
+            if (n.includes("plus")) return 3;
+            if (n.includes("mini")) return 4;
+            if (n.includes("se")) return 5;
+            return 6; // normal iPhone
+          };
+
+          const versionDiff = getVersion(b.name) - getVersion(a.name);
+          if (versionDiff !== 0) return versionDiff;
+
+          return modelPriority(a.name) - modelPriority(b.name);
+        });
 
   deviceList.innerHTML = `
     <div class="dropdown-item" data-value="auto">
@@ -135,7 +160,7 @@ function loadDevices() {
     </div>
   `;
 
-  list.forEach(d => {
+  list.forEach((d) => {
     const item = document.createElement("div");
     item.className = "dropdown-item";
     item.dataset.value = d.name;
@@ -150,17 +175,17 @@ function loadDevices() {
 // DEVICE CLICK
 // =====================
 function attachDeviceEvents() {
-  document.querySelectorAll("#deviceList .dropdown-item").forEach(item => {
+  document.querySelectorAll("#deviceList .dropdown-item").forEach((item) => {
     item.addEventListener("click", (e) => {
       e.stopPropagation();
       const value = item.dataset.value;
       selectedDevice = value;
-      deviceSelected.textContent = value === "auto"
-        ? "🤖 Auto-detect device (recommended)"
-        : value;
+      deviceSelected.textContent =
+        value === "auto" ? "🤖 Auto-detect device (recommended)" : value;
 
-      document.querySelectorAll("#deviceList .dropdown-item")
-        .forEach(i => i.classList.remove("active"));
+      document
+        .querySelectorAll("#deviceList .dropdown-item")
+        .forEach((i) => i.classList.remove("active"));
       item.classList.add("active");
       deviceDropdown.classList.remove("open");
     });
@@ -200,14 +225,18 @@ searchInput.addEventListener("input", function () {
 
   platformButtons.style.display = "none";
 
-  const isIphone = iphoneDevices.some(d => d.name.toLowerCase().includes(query));
-  const isAndroid = androidDevices.some(d => d.name.toLowerCase().includes(query));
+  const isIphone = iphoneDevices.some((d) =>
+    d.name.toLowerCase().includes(query)
+  );
+  const isAndroid = androidDevices.some((d) =>
+    d.name.toLowerCase().includes(query)
+  );
 
   if (isIphone) setPlatform("ios");
   else if (isAndroid) setPlatform("android");
 
   const list = selectedPlatform === "android" ? androidDevices : iphoneDevices;
-  const matches = list.filter(d => d.name.toLowerCase().includes(query));
+  const matches = list.filter((d) => d.name.toLowerCase().includes(query));
 
   deviceList.innerHTML = "";
 
@@ -229,7 +258,7 @@ searchInput.addEventListener("input", function () {
     </div>
   `;
 
-  matches.forEach(d => {
+  matches.forEach((d) => {
     const item = document.createElement("div");
     item.className = "dropdown-item";
     item.dataset.value = d.name;
@@ -248,7 +277,7 @@ searchInput.addEventListener("input", function () {
 // =====================
 function getDevice(name) {
   const all = [...iphoneDevices, ...androidDevices];
-  return all.find(d => d.name === name);
+  return all.find((d) => d.name === name);
 }
 
 // =====================
@@ -256,16 +285,104 @@ function getDevice(name) {
 // =====================
 const baseProfile = {
   iphone: {
-    camera: { tpp: 110, fpp: 105, tppAim: 95, fppAim: 90, redDot: 55, x2: 35, x3: 25, x4: 20, x6: 12, x8: 10 },
-    ads: { tpp: 95, fpp: 90, tppAim: 85, fppAim: 80, redDot: 55, x2: 35, x3: 25, x4: 18, x6: 12, x8: 10 },
-    gyro: { tpp: 330, fpp: 330, tppAim: 300, fppAim: 300, redDot: 320, x2: 280, x3: 240, x4: 190, x6: 120, x8: 90 },
-    adsGyro: { tpp: 300, fpp: 300, tppAim: 280, fppAim: 280, redDot: 300, x2: 250, x3: 200, x4: 150, x6: 100, x8: 80 }
+    camera: {
+      tpp: 110,
+      fpp: 105,
+      tppAim: 95,
+      fppAim: 90,
+      redDot: 55,
+      x2: 35,
+      x3: 25,
+      x4: 20,
+      x6: 12,
+      x8: 10
+    },
+    ads: {
+      tpp: 95,
+      fpp: 90,
+      tppAim: 85,
+      fppAim: 80,
+      redDot: 55,
+      x2: 35,
+      x3: 25,
+      x4: 18,
+      x6: 12,
+      x8: 10
+    },
+    gyro: {
+      tpp: 330,
+      fpp: 330,
+      tppAim: 300,
+      fppAim: 300,
+      redDot: 320,
+      x2: 280,
+      x3: 240,
+      x4: 190,
+      x6: 120,
+      x8: 90
+    },
+    adsGyro: {
+      tpp: 300,
+      fpp: 300,
+      tppAim: 280,
+      fppAim: 280,
+      redDot: 300,
+      x2: 250,
+      x3: 200,
+      x4: 150,
+      x6: 100,
+      x8: 80
+    }
   },
   android: {
-    camera: { tpp: 125, fpp: 120, tppAim: 105, fppAim: 100, redDot: 65, x2: 40, x3: 30, x4: 22, x6: 14, x8: 10 },
-    ads: { tpp: 105, fpp: 100, tppAim: 95, fppAim: 90, redDot: 60, x2: 40, x3: 30, x4: 22, x6: 14, x8: 10 },
-    gyro: { tpp: 370, fpp: 370, tppAim: 340, fppAim: 340, redDot: 350, x2: 300, x3: 260, x4: 200, x6: 130, x8: 90 },
-    adsGyro: { tpp: 320, fpp: 320, tppAim: 300, fppAim: 300, redDot: 320, x2: 270, x3: 220, x4: 160, x6: 110, x8: 80 }
+    camera: {
+      tpp: 125,
+      fpp: 120,
+      tppAim: 105,
+      fppAim: 100,
+      redDot: 65,
+      x2: 40,
+      x3: 30,
+      x4: 22,
+      x6: 14,
+      x8: 10
+    },
+    ads: {
+      tpp: 105,
+      fpp: 100,
+      tppAim: 95,
+      fppAim: 90,
+      redDot: 60,
+      x2: 40,
+      x3: 30,
+      x4: 22,
+      x6: 14,
+      x8: 10
+    },
+    gyro: {
+      tpp: 370,
+      fpp: 370,
+      tppAim: 340,
+      fppAim: 340,
+      redDot: 350,
+      x2: 300,
+      x3: 260,
+      x4: 200,
+      x6: 130,
+      x8: 90
+    },
+    adsGyro: {
+      tpp: 320,
+      fpp: 320,
+      tppAim: 300,
+      fppAim: 300,
+      redDot: 320,
+      x2: 270,
+      x3: 220,
+      x4: 160,
+      x6: 110,
+      x8: 80
+    }
   }
 };
 
@@ -273,8 +390,8 @@ const baseProfile = {
 // STYLE FACTOR
 // =====================
 function styleFactor() {
-  if (selectedStyle === "aggressive") return 1.10;
-  if (selectedStyle === "sniper") return 0.90;
+  if (selectedStyle === "aggressive") return 1.1;
+  if (selectedStyle === "sniper") return 0.9;
   return 1;
 }
 
@@ -327,10 +444,9 @@ function resetApp() {
   fpsHidden.value = "60";
   fpsSelected.textContent = "60 FPS";
 
-  document.querySelectorAll("#fpsList .dropdown-item")
-    .forEach(i => {
-      i.classList.toggle("active", i.getAttribute("data-value") === "60");
-    });
+  document.querySelectorAll("#fpsList .dropdown-item").forEach((i) => {
+    i.classList.toggle("active", i.getAttribute("data-value") === "60");
+  });
 
   deviceSelected.textContent = "Select your device model";
 
@@ -343,7 +459,7 @@ function resetApp() {
 
   currentMode = "generate";
   currentSavedIndex = null;
-  
+
   updateResultButton();
 }
 
@@ -360,21 +476,27 @@ generateBtn.addEventListener("click", generate);
 function generate() {
   // Check if device is selected
   if (!selectedDevice || selectedDevice === null) {
-    showNotification("⚠ Please select or search for your device first!", "#ff4d4d");
+    showNotification(
+      "⚠ Please select or search for your device first!",
+      "#ff4d4d"
+    );
     return;
   }
 
   const fps = selectedFps || fpsHidden.value;
   let device = null;
-  
+
   if (selectedDevice && selectedDevice !== "auto") {
     device = getDevice(selectedDevice);
   }
 
   const type = selectedPlatform === "ios" ? "iphone" : "android";
   const base = JSON.parse(JSON.stringify(baseProfile[type]));
-  const deviceBoost = device ? (device.touchResponse / 100) : 1;
-  const finalFactor = styleFactor() * deviceBoost * (fps === "60" ? 1.05 : fps === "120" ? 0.95 : 1);
+  const deviceBoost = device ? device.touchResponse / 100 : 1;
+  const finalFactor =
+    styleFactor() *
+    deviceBoost *
+    (fps === "60" ? 1.05 : fps === "120" ? 0.95 : 1);
 
   function apply(obj) {
     for (let k in obj) {
@@ -413,11 +535,11 @@ function generate() {
 function showNotification(message, color) {
   // Check if notification already exists
   let notification = document.getElementById("deviceNotification");
-  
+
   if (notification) {
     notification.remove();
   }
-  
+
   // Create notification element
   notification = document.createElement("div");
   notification.id = "deviceNotification";
@@ -434,11 +556,11 @@ function showNotification(message, color) {
     animation: fadeInUp 0.3s ease;
     border: 1px solid rgba(255,255,255,0.2);
   `;
-  
+
   // Insert notification after the generate button
   const generateBtn = document.getElementById("generateBtn");
   generateBtn.parentNode.insertBefore(notification, generateBtn.nextSibling);
-  
+
   // Auto remove after 3 seconds
   setTimeout(() => {
     if (notification) {
@@ -538,7 +660,7 @@ function saveSensitivity() {
   const newCancelBtn = cancelBtn.cloneNode(true);
   confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
   cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
-  
+
   // Update references
   const newConfirm = newConfirmBtn;
   const newCancel = newCancelBtn;
@@ -588,7 +710,7 @@ function saveSensitivity() {
     newConfirm.style.display = "none";
     newCancel.style.display = "none";
     if (modalTitle) modalTitle.style.display = "none";
-    
+
     modalMessage.innerText = "✅ Saved successfully!";
     modalMessage.style.color = "#00ffcc";
     modalMessage.style.fontSize = "18px";
@@ -620,7 +742,7 @@ function showSaved() {
   const listDiv = document.getElementById("savedList");
 
   container.style.display = "block";
-  
+
   let saved = JSON.parse(localStorage.getItem("sensitivities")) || [];
 
   // Remove existing close button
@@ -634,7 +756,7 @@ function showSaved() {
   closeBtn.className = "close-saved-btn";
   closeBtn.innerHTML = "✕";
   closeBtn.setAttribute("aria-label", "Close");
-  
+
   closeBtn.style.cssText = `
     position: absolute;
     top: 15px;
@@ -655,23 +777,23 @@ function showSaved() {
     padding: 0;
     z-index: 1001;
   `;
-  
+
   closeBtn.onmouseover = () => {
     closeBtn.style.background = "#00ffcc";
     closeBtn.style.color = "black";
     closeBtn.style.transform = "scale(1.05)";
   };
-  
+
   closeBtn.onmouseout = () => {
     closeBtn.style.background = "transparent";
     closeBtn.style.color = "#00ffcc";
     closeBtn.style.transform = "scale(1)";
   };
-  
+
   closeBtn.onclick = () => {
     container.style.display = "none";
   };
-  
+
   container.appendChild(closeBtn);
 
   if (saved.length === 0) {
@@ -681,8 +803,9 @@ function showSaved() {
     return;
   }
 
-  listDiv.innerHTML = saved.map((item, index) => {
-    return `
+  listDiv.innerHTML = saved
+    .map((item, index) => {
+      return `
       <div class="card saved-item" data-index="${index}" style="margin:10px 0; padding:12px; cursor:pointer; background: #141414; border: 1px solid #222; border-radius: 10px; transition: all 0.2s; position: relative;">
         <h3 style="margin: 0 0 5px 0; color: #00ffcc; font-size: 16px;">📌 ${escapeHtml(item.name)}</h3>
         <p style="margin: 0; color: #aaa; font-size: 12px;">
@@ -690,10 +813,11 @@ function showSaved() {
         </p>
       </div>
     `;
-  }).join("");
+    })
+    .join("");
 
   // Add hover effects and click handlers
-  document.querySelectorAll(".saved-item").forEach(item => {
+  document.querySelectorAll(".saved-item").forEach((item) => {
     item.addEventListener("mouseover", () => {
       item.style.background = "#1a1a1a";
       item.style.borderColor = "#00ffcc";
@@ -714,11 +838,11 @@ function showSaved() {
 
 // Helper function to prevent XSS attacks
 function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/[&<>]/g, function(m) {
-    if (m === '&') return '&amp;';
-    if (m === '<') return '&lt;';
-    if (m === '>') return '&gt;';
+  if (!str) return "";
+  return str.replace(/[&<>]/g, function (m) {
+    if (m === "&") return "&amp;";
+    if (m === "<") return "&lt;";
+    if (m === ">") return "&gt;";
     return m;
   });
 }
@@ -773,16 +897,16 @@ function goHome() {
   document.getElementById("savedList").innerHTML = "";
 
   document.getElementById("platform-group").style.display = "flex";
-  
+
   // Clear search input
   if (searchInput) {
     searchInput.value = "";
   }
-  
+
   // Reset device dropdown
   deviceSelected.textContent = "Select your device model";
   selectedDevice = null;
-  
+
   // Reload devices to reset the list
   loadDevices();
 

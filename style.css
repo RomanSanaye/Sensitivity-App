@@ -1,5 +1,6 @@
 /* ========================================
    🎮 PUBG MOBILE SENSITIVITY GENERATOR
+   ✨ GLASSY MODERN EDITION (FIXED)
    ======================================== */
 
 /* ==================== 1. GLOBAL RESET & BASE ==================== */
@@ -7,15 +8,30 @@ html,
 body {
   overflow-x: hidden;
 }
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0b;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  background: radial-gradient(circle at 20% 30%, #0f0f0f, #050505);
   color: white;
+  min-height: 100vh;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
 /* Prevent body scroll when modal is open */
@@ -27,144 +43,195 @@ body.modal-open {
 .app {
   max-width: 520px;
   margin: auto;
-  padding: 16px;
+  padding: 20px 16px;
+  position: relative;
 }
 
 /* ==================== 3. TYPOGRAPHY ==================== */
 h1 {
   text-align: center;
-  color: #00ffcc;
-  margin-bottom: 20px;
+  background: linear-gradient(135deg, #00ffcc 0%, #00b38f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 24px;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
 }
 
 h2 {
-  font-size: 15px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  margin-bottom: 12px;
   color: #00ffcc;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
-/* ==================== 4. CARDS ==================== */
+/* ==================== 4. CARDS (GLASS EFFECT) ==================== */
 .card {
-  background: #161616;
-  padding: 20px 14px;
-  margin: 12px 0;
-  border-radius: 14px;
-  border: 1px solid #222;
+  background: rgba(22, 22, 22, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 20px 16px;
+  margin: 16px 0;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 255, 204, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.card:hover {
+  border-color: rgba(0, 255, 204, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 255, 204, 0.1);
 }
 
 /* ==================== 5. INPUT FIELDS ==================== */
 input {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  background: #222;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(34, 34, 34, 0.8);
+  backdrop-filter: blur(5px);
   color: white;
   outline: none;
+  font-size: 15px;
+  transition: all 0.25s ease;
 }
 
-/* ==================== 6. BUTTONS ==================== */
+input:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.2);
+  background: rgba(34, 34, 34, 0.95);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ==================== 6. BUTTONS (SMOOTH & GENTLE) ==================== */
 button {
   width: 100%;
   padding: 14px;
   border: none;
-  border-radius: 12px;
-  background: #00ffcc;
-  font-weight: bold;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #00ffcc 0%, #00ccaa 100%);
+  font-weight: 700;
   font-size: 16px;
-  color: black;
+  color: #0a0a0a;
   cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Subtle hover effect - no aggressive scale */
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 255, 204, 0.25);
+  filter: brightness(1.02);
+}
+
+/* Gentle click effect - no aggressive scale */
 button:active {
-  transform: scale(0.99);
+  transform: translateY(1px);
+  transition: all 0.05s ease;
+}
+
+/* Remove ripple effect if it was causing issues */
+button::before {
+  display: none;
 }
 
 /* Reset Button */
 .reset-btn {
-  width: 100%;
-  padding: 12px;
+  background: linear-gradient(135deg, #1a472a 0%, #0d2b1a 100%);
+  color: #e0e0e0;
   margin-top: 20px;
-  background: darkgreen;
-  color: white;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
 }
 
 .reset-btn:hover {
-  background: green;
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, #2a6a3a 0%, #1a472a 100%);
+  box-shadow: 0 6px 16px rgba(0, 100, 0, 0.25);
 }
 
-.reset-btn:active {
-  transform: translateY(0);
-}
-
-/* ==================== 7. TOGGLE GROUPS (Platform, Gyro, Playstyle) ==================== */
+/* ==================== 7. TOGGLE GROUPS ==================== */
 .toggle-group {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .toggle-group button {
   flex: 1;
   padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #333;
-  background: #222;
-  color: white;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(34, 34, 34, 0.8);
+  backdrop-filter: blur(5px);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .toggle-group button:hover {
-  background: #2a2a2a;
+  background: rgba(51, 51, 51, 0.9);
+  transform: translateY(-1px);
+  border-color: rgba(0, 255, 204, 0.4);
+}
+
+.toggle-group button:active {
+  transform: translateY(1px);
 }
 
 .toggle-group button.active {
-  background: #00ffcc;
-  color: black;
+  background: linear-gradient(135deg, #00ffcc 0%, #00ccaa 100%);
+  color: #0a0a0a;
   font-weight: bold;
   border: none;
+  box-shadow: 0 4px 12px rgba(0, 255, 204, 0.3);
 }
 
-/* ==================== 8. DROPDOWN (FPS & Device) ==================== */
+/* ==================== 8. DROPDOWN (FIXED Z-INDEX) ==================== */
 .custom-dropdown {
   position: relative;
   width: 100%;
   user-select: none;
+  z-index: 100; /* Higher than cards */
 }
 
 .dropdown-selected {
-  background: #222;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #333;
+  background: rgba(34, 34, 34, 0.8);
+  backdrop-filter: blur(5px);
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   position: relative;
-  transition: 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .dropdown-selected:hover {
-  border-color: #00ffcc55;
+  border-color: rgba(0, 255, 204, 0.5);
+  background: rgba(34, 34, 34, 0.95);
 }
 
 .dropdown-selected::after {
   content: "";
   position: absolute;
-  right: 14px;
+  right: 16px;
   top: 50%;
   width: 8px;
   height: 8px;
   border-right: 2px solid #00ffcc;
   border-bottom: 2px solid #00ffcc;
   transform: translateY(-50%) rotate(45deg);
-  transition: 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .custom-dropdown.open .dropdown-selected::after {
@@ -173,73 +240,77 @@ button:active {
 
 .dropdown-list {
   position: absolute;
-  top: 110%;
+  top: calc(100% + 8px);
   left: 0;
   width: 100%;
-  background: #141414;
-  border: 1px solid #333;
-  border-radius: 10px;
+  background: rgba(20, 20, 20, 0.98);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  border-radius: 16px;
   max-height: 0;
   opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.25s ease;
-  z-index: 999;
+  transform: translateY(-8px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999; /* Very high to stay above everything */
   overflow-y: auto;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
 .custom-dropdown.open .dropdown-list {
-  max-height: 240px;
+  max-height: 260px;
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Dropdown Items */
 .dropdown-item {
-  padding: 12px 14px;
+  padding: 12px 16px;
   cursor: pointer;
-  color: white;
-  transition: 0.2s ease;
+  color: #e0e0e0;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  margin: 4px 8px;
 }
 
 .dropdown-item:hover {
-  background: #222;
+  background: rgba(0, 255, 204, 0.15);
   color: #00ffcc;
+  transform: translateX(4px);
 }
 
 .dropdown-item.active {
-  background: #00ffcc;
-  color: black;
+  background: linear-gradient(135deg, #00ffcc 0%, #00ccaa 100%);
+  color: #0a0a0a;
   font-weight: bold;
 }
 
 .dropdown-item.disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   pointer-events: none;
   font-style: italic;
 }
 
 /* Dropdown Scrollbar */
-.custom-dropdown .dropdown-list {
+.dropdown-list {
   scrollbar-width: thin;
-  scrollbar-color: #00ffcc #111;
+  scrollbar-color: #00ffcc #1a1a1a;
 }
 
-.custom-dropdown .dropdown-list::-webkit-scrollbar {
-  width: 8px;
+.dropdown-list::-webkit-scrollbar {
+  width: 6px;
 }
 
-.custom-dropdown .dropdown-list::-webkit-scrollbar-track {
-  background: #111;
+.dropdown-list::-webkit-scrollbar-track {
+  background: #1a1a1a;
   border-radius: 10px;
 }
 
-.custom-dropdown .dropdown-list::-webkit-scrollbar-thumb {
+.dropdown-list::-webkit-scrollbar-thumb {
   background: #00ffcc;
   border-radius: 10px;
-  border: 2px solid #111;
 }
 
-.custom-dropdown .dropdown-list::-webkit-scrollbar-thumb:hover {
+.dropdown-list::-webkit-scrollbar-thumb:hover {
   background: #00e6b8;
 }
 
@@ -249,20 +320,22 @@ button:active {
 }
 
 #resultScreen .card {
-  border: 1px solid #00ffcc33;
-  background: #141414;
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 204, 0.2);
 }
 
 #resultScreen h2 {
-  font-size: 16px;
+  font-size: 15px;
   margin-bottom: 12px;
 }
 
 .result p {
   white-space: pre-line;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.7;
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* ==================== 10. SAVED CONTAINER ==================== */
@@ -277,41 +350,37 @@ button:active {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-
   width: 100%;
   max-width: 520px;
-
-  margin-bottom: 10px;
-
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(2px);
-
+  margin-bottom: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
   z-index: 9999;
-
   display: none;
+  border-radius: 24px;
 }
 
-/* Show state */
 #savedContainer.show {
   display: block;
-  justify-content: center;
+  animation: modalPopIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Saved List Panel - Netflix style card */
+/* Saved List Panel */
 #savedList {
   width: 100%;
   max-width: 520px;
-
-  background: #161616;
-  border: 1px solid #00ffcc55;
-  border-radius: 20px;
+  background: rgba(22, 22, 22, 0.95);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  border-radius: 24px;
   padding: 20px;
   padding-top: 55px;
   max-height: 60vh;
   overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  z-index: 10000;
 }
 
-/* Heading inside saved list */
 #savedList h2 {
   margin-top: 0;
   margin-bottom: 15px;
@@ -331,26 +400,16 @@ button:active {
   }
 }
 
-/* Fade in for overlay */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Close button positioning (inside the panel) */
+/* Close button */
 .close-saved-btn {
   position: absolute;
   top: 15px;
   right: 15px;
-  width: 32px;
-  height: 32px;
-  background: transparent;
+  width: 34px;
+  height: 34px;
+  background: rgba(0, 255, 204, 0.1);
   color: #00ffcc;
-  border: 1px solid #00ffcc;
+  border: 1px solid rgba(0, 255, 204, 0.4);
   border-radius: 50%;
   font-size: 18px;
   font-weight: bold;
@@ -358,24 +417,26 @@ button:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   padding: 0;
-  z-index: 1;
+  z-index: 10001;
+  backdrop-filter: blur(5px);
 }
 
 .close-saved-btn:hover {
   background: #00ffcc;
   color: black;
-  transform: scale(1.05);
+  transform: scale(1.08) rotate(90deg);
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
 }
 
 /* Scrollbar for saved list */
 #savedList::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 #savedList::-webkit-scrollbar-track {
-  background: #222;
+  background: #1a1a1a;
   border-radius: 10px;
 }
 
@@ -390,33 +451,36 @@ button:active {
 
 /* ==================== 11. SAVED ITEMS ==================== */
 .saved-item {
-  margin: 10px 0;
-  padding: 12px;
+  margin: 12px 0;
+  padding: 14px;
   cursor: pointer;
-  background: #141414;
-  border: 1px solid #222;
-  border-radius: 10px;
-  transition: all 0.2s ease;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 .saved-item:hover {
-  background: #1a1a1a;
+  background: rgba(30, 30, 30, 0.9);
   border-color: #00ffcc;
-  transform: translateX(3px);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0, 255, 204, 0.15);
 }
 
 .saved-item h3 {
-  margin: 0 0 5px 0;
+  margin: 0 0 6px 0;
   color: #00ffcc;
   font-size: 16px;
   word-break: break-word;
+  font-weight: 600;
 }
 
 .saved-item p {
   margin: 0;
-  color: #aaa;
+  color: rgba(170, 170, 170, 0.9);
   font-size: 12px;
   word-break: break-word;
 }
@@ -428,86 +492,128 @@ button:active {
   color: #ff4d4d;
   flex-shrink: 0;
   padding: 6px;
-  border-radius: 6px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.2s;
+  transition: all 0.2s ease;
 }
 
 .delete-icon:hover {
-  background: rgba(255, 77, 77, 0.15);
+  background: rgba(255, 77, 77, 0.2);
+  transform: scale(1.1);
 }
 
-/* ==================== 13. MODAL (Save Dialog) ==================== */
+/* ==================== 13. MODAL ==================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  z-index: 9999;
+  z-index: 20000;
+  animation: fadeIn 0.2s ease;
 }
 
 .modal-box {
-  background: #161616;
+  background: rgba(22, 22, 22, 0.95);
+  backdrop-filter: blur(15px);
   width: calc(100vw - 32px);
   max-width: 350px;
-  padding: 20px;
-  border-radius: 12px;
+  padding: 24px;
+  border-radius: 28px;
   text-align: center;
-  border: 1px solid #00ffcc;
+  border: 1px solid rgba(0, 255, 204, 0.4);
   overflow: hidden;
   position: relative;
   margin-top: 25vh;
+  animation: modalPopIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  z-index: 20001;
 }
 
 .modal-box h2 {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   color: #00ffcc;
+  font-size: 20px;
 }
 
 .modal-box input {
-  width: calc(100% - 0px);
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: none;
-  background: #222;
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(34, 34, 34, 0.9);
   color: white;
-  min-width: 0;
-  font-size: 16px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.modal-box input:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.2);
 }
 
 .modal-buttons {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .modal-buttons button {
   flex: 1;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 600;
 }
 
-/* ==================== 14. MOBILE RESPONSIVE ==================== */
+#openSavedBtn {
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4d3e 100%);
+  border: none;
+  color: white;
+}
+
+#openSavedBtn:hover {
+  background: linear-gradient(135deg, #3a8a5f 0%, #2d6a4f 100%);
+  box-shadow: 0 6px 16px rgba(45, 106, 79, 0.3);
+}
+
+/* ==================== 14. NOTIFICATION ==================== */
+#deviceNotification {
+  animation: fadeInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  position: relative;
+}
+
+/* ==================== 15. MOBILE RESPONSIVE ==================== */
 @media (max-width: 480px) {
   .toggle-group {
     flex-direction: column;
+    gap: 8px;
   }
 
   button {
-    font-size: 17px;
-    padding: 16px;
+    font-size: 15px;
+    padding: 14px;
   }
 
   .card {
-    padding: 18px 14px;
+    padding: 16px 14px;
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .dropdown-selected {
+    padding: 12px 14px;
   }
 }
 
-/* ==================== 15. NOTIFICATION ANIMATIONS ==================== */
+/* ==================== 16. ANIMATIONS ==================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -528,4 +634,20 @@ button:active {
     opacity: 0;
     transform: translateY(10px);
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==================== 17. GLASS EFFECT UTILITIES ==================== */
+.glass {
+  background: rgba(22, 22, 22, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }

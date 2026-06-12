@@ -11,147 +11,153 @@
   </head>
 
   <body>
-    <!-- ================= INPUT SCREEN ================= -->
-    <div id="inputScreen" class="app">
-      <h1>🎮 PUBG Sensitivity</h1>
+    <main>
+      <!-- ================= INPUT SCREEN ================= -->
+      <div id="inputScreen" class="app">
+        <h1>🎮 PUBG Sensitivity</h1>
 
-      <!-- DEVICE & PLATFORM -->
-      <div class="card">
-        <h2>Device & Platform</h2>
+        <!-- DEVICE & PLATFORM -->
+        <div
+          class="card"
+          style="overflow: visible; position: relative; z-index: 10"
+        >
+          <h2>Device & Platform</h2>
 
-        <input
-          id="phone"
-          type="text"
-          placeholder="Search device"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-        />
+          <input
+            id="phone"
+            type="text"
+            placeholder="Search device"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
 
-        <br /><br />
+          <br /><br />
 
-        <div class="toggle-group" id="platform-group">
-          <button id="platform-android" class="active">Android</button>
-          <button id="platform-ios">iPhone / iOS</button>
-        </div>
-
-        <br /><br />
-
-        <!-- DEVICE DROPDOWN -->
-        <div class="custom-dropdown" id="deviceDropdown">
-          <div class="dropdown-selected" id="deviceSelected">
-            Select your device model
+          <div class="toggle-group" id="platform-group">
+            <button id="platform-android" class="active">Android</button>
+            <button id="platform-ios">iPhone / iOS</button>
           </div>
-          <div class="dropdown-list" id="deviceList"></div>
-        </div>
-      </div>
 
-      <!-- FPS -->
-      <div class="card">
-        <h2>FPS</h2>
+          <br /><br />
 
-        <div class="custom-dropdown" id="fpsDropdown">
-          <div class="dropdown-selected" id="fpsSelected">60 FPS</div>
-
-          <div class="dropdown-list" id="fpsList">
-            <div class="dropdown-item" data-value="60">60 FPS</div>
-            <div class="dropdown-item" data-value="90">90 FPS</div>
-            <div class="dropdown-item" data-value="120">120 FPS</div>
+          <!-- DEVICE DROPDOWN -->
+          <div class="custom-dropdown" id="deviceDropdown">
+            <div class="dropdown-selected" id="deviceSelected">
+              Select your device model
+            </div>
+            <div class="dropdown-list" id="deviceList"></div>
           </div>
         </div>
 
-        <input type="hidden" id="fps" value="60" />
-      </div>
+        <!-- FPS -->
+        <div
+          class="card"
+          style="overflow: visible; position: relative; z-index: 9"
+        >
+          <h2>FPS</h2>
 
-      <!-- GYROSCOPE -->
-      <div class="card">
-        <h2>Gyroscope</h2>
+          <div class="custom-dropdown" id="fpsDropdown">
+            <div class="dropdown-selected" id="fpsSelected">60 FPS</div>
 
-        <div class="toggle-group">
-          <button id="gyro-on" class="active">ON</button>
-          <button id="gyro-off">OFF</button>
+            <div class="dropdown-list" id="fpsList">
+              <div class="dropdown-item" data-value="60">60 FPS</div>
+              <div class="dropdown-item" data-value="90">90 FPS</div>
+              <div class="dropdown-item" data-value="120">120 FPS</div>
+            </div>
+          </div>
+
+          <input type="hidden" id="fps" value="60" />
         </div>
-      </div>
 
-      <!-- PLAYSTYLE -->
-      <div class="card">
-        <h2>Playstyle</h2>
+        <!-- GYROSCOPE -->
+        <div class="card" style="overflow: visible">
+          <h2>Gyroscope</h2>
 
-        <div class="toggle-group">
-          <button id="style-balanced" class="active">Balanced</button>
-          <button id="style-aggressive">Aggressive</button>
-          <button id="style-sniper">Sniper</button>
+          <div class="toggle-group">
+            <button id="gyro-on" class="active">ON</button>
+            <button id="gyro-off">OFF</button>
+          </div>
         </div>
-      </div>
 
-      <!-- ACTION BUTTONS -->
-      <div class="card">
-        <button id="generateBtn">🎯 Generate Sensitivity</button>
-        <br /><br />
-      </div>
+        <!-- PLAYSTYLE -->
+        <div class="card" style="overflow: visible">
+          <h2>Playstyle</h2>
 
-      <!-- ================= SAVED BUTTON + POPUP ================= -->
-      <div class="saved-wrapper">
-        <button id="openSavedBtn">📂 Saved Sensitivities</button>
+          <div class="toggle-group">
+            <button id="style-balanced" class="active">Balanced</button>
+            <button id="style-aggressive">Aggressive</button>
+            <button id="style-sniper">Sniper</button>
+          </div>
+        </div>
 
-        <div id="savedContainer">
-          <div id="savedList">
-            <h2>📂 Saved Sensitivities</h2>
-            <!-- JS will inject saved items here -->
+        <!-- ACTION BUTTONS -->
+        <div class="card" style="overflow: visible">
+          <button id="generateBtn">🎯 Generate Sensitivity</button>
+        </div>
+
+        <!-- ================= SAVED BUTTON + POPUP ================= -->
+        <div class="saved-wrapper">
+          <button id="openSavedBtn">📂 Saved Sensitivities</button>
+
+          <div id="savedContainer">
+            <div id="savedList">
+              <h2>📂 Saved Sensitivities</h2>
+              <!-- JS will inject saved items here -->
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- ================= RESULT SCREEN ================= -->
-    <div id="resultScreen" class="app" style="display: none">
-      <h1>🎯 Your Sensitivity</h1>
+      <!-- ================= RESULT SCREEN ================= -->
+      <div id="resultScreen" class="app" style="display: none">
+        <h1>🎯 Your Sensitivity</h1>
 
-      <div class="card result">
-        <h2>📷 Camera</h2>
-        <p id="camera"></p>
+        <div class="card result">
+          <h2>📷 Camera</h2>
+          <p id="camera"></p>
+        </div>
+
+        <div class="card result">
+          <h2>🔫 ADS</h2>
+          <p id="ads"></p>
+        </div>
+
+        <div class="card result">
+          <h2>📱 Gyro</h2>
+          <p id="gyroResult"></p>
+        </div>
+
+        <div class="card result">
+          <h2>🔥 ADS Gyro</h2>
+          <p id="adsGyro"></p>
+        </div>
+
+        <button id="saveBtn">💾 Save Sensitivity</button>
+        <button class="reset-btn" id="resetBtn">⬅ Back</button>
       </div>
 
-      <div class="card result">
-        <h2>🔫 ADS</h2>
-        <p id="ads"></p>
-      </div>
+      <!-- ================= SAVE MODAL ================= -->
+      <div id="saveModal" class="modal-overlay" style="display: none">
+        <div class="modal-box">
+          <h2>Save Sensitivity</h2>
 
-      <div class="card result">
-        <h2>📱 Gyro</h2>
-        <p id="gyroResult"></p>
-      </div>
+          <p id="modalMessage" style="color: #00ffcc; margin-bottom: 10px"></p>
 
-      <div class="card result">
-        <h2>🔥 ADS Gyro</h2>
-        <p id="adsGyro"></p>
-      </div>
+          <input id="saveNameInput" type="text" placeholder="Enter a name..." />
 
-      <button id="saveBtn">💾 Save Sensitivity</button>
-      <button class="reset-btn" id="resetBtn">⬅ Back</button>
-    </div>
-
-    <!-- ================= SAVE MODAL ================= -->
-    <div id="saveModal" class="modal-overlay" style="display: none">
-      <div class="modal-box">
-        <h2>Save Sensitivity</h2>
-
-        <p id="modalMessage" style="color: #00ffcc; margin-bottom: 10px"></p>
-
-        <input id="saveNameInput" type="text" placeholder="Enter a name..." />
-
-        <div class="modal-buttons">
-          <button id="confirmSaveBtn">Save</button>
-          <button id="cancelSaveBtn" style="background: #444; color: white">
-            Cancel
-          </button>
+          <div class="modal-buttons">
+            <button id="confirmSaveBtn">Save</button>
+            <button id="cancelSaveBtn" style="background: #444; color: white">
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <script type="module" src="app.js"></script>
-
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
